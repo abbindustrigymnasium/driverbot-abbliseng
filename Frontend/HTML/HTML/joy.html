@@ -36,8 +36,8 @@
       // client.send(message);
     }
     function drive(turn, speed) {
-      speed = -1*speed;
-      let mess4 = `${turn+":"+speed}`;
+      speed = -1 * speed;
+      let mess4 = `${turn + ":" + speed}`;
       message = new Paho.MQTT.Message(mess4);
       message.destinationName = "abbexpectmore@gmail.com/ctrl";
       client.send(message);
@@ -72,33 +72,32 @@
 <body>
   <script>
     function startConnect() {
-          // Generate a random client ID
-          clientID = "clientID_" + parseInt(Math.random() * 100);
+      // Generate a random client ID
+      clientID = "clientID_" + parseInt(Math.random() * 100);
 
-          // Fetch the hostname/IP address and port number from the form
-          host = "maqiatto.com";
-          port = 8883;
+      // Fetch the hostname/IP address and port number from the form
+      host = "maqiatto.com";
+      port = 8883;
 
-          '</span><br/>';
+      '</span><br/>';
 
-          '</span><br/>';
-          // Initialize new Paho client connection
-          client = new Paho.MQTT.Client(host, Number(port), clientID);
-          // Set callback handlers
-          client.onConnectionLost = onConnectionLost;
-          client.onMessageArrived = onMessageArrived;
+      '</span><br/>';
+      // Initialize new Paho client connection
+      client = new Paho.MQTT.Client(host, Number(port), clientID);
+      // Set callback handlers
+      client.onConnectionLost = onConnectionLost;
+      client.onMessageArrived = onMessageArrived;
 
-          client.connect({
-              userName: "abbexpectmore@gmail.com",
-              password: "hej",
-              onSuccess: onConnect,
-              onFailure: onFail,
-          });
-      }
+      client.connect({
+        userName: "abbexpectmore@gmail.com",
+        password: "hej",
+        onSuccess: onConnect,
+        onFailure: onFail,
+      });
+    }
     window.onload = startConnect();
   </script>
 </body>
-
 
 <body class="noselect all" onload="init();">
   <div class="container space-top">
@@ -116,6 +115,7 @@
     height: 100%;
     width: 100%;
     background-color: #dedede;
+    justify-content: space-around;
   }
 
   .space-top {
@@ -196,7 +196,7 @@
       var y = (ev.center.y - pos.top - 150);
       $('#xVal').text('X: ' + x);
       $('#yVal').text('Y: ' + (-1 * y));
-      drive(x,y);
+      drive(x, y);
 
       var coords = calculateCoords(ev.angle, ev.distance);
 
