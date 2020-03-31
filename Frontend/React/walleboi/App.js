@@ -6,6 +6,7 @@ import { StyleSheet,
    AsyncStorage 
   } from 'react-native';
 import init from './node_modules/react_native_mqtt'
+
 init({
   size: 10000,
   storageBackend: AsyncStorage,
@@ -55,7 +56,9 @@ export default class reactApp extends Component{
     var message = new Paho.MQTT.Message(mess);
     message.destinationName = "abbexpectmore@gmail.com/ctrl";
     client.send(message);
+    console.log(this.map(10, 0, 20, 0, 100))
   }
+  map = (value, x1, y1, x2, y2) => (value - x1) * (y2 - x2) / (y1 - x1) + x2;
   render(){
     return(
       <View style={styles.container}>
