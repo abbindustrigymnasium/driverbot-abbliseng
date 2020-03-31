@@ -14,3 +14,4 @@
 * Test av konstruktion och programmering av test sekvens
 * Bygge av plats till powerbank istället för batterier  
 *Det var här visionen om en bra och fin konstruktion dog.*
+* Beräkning av svängradie mm för att optimera körning :)
