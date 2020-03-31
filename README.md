@@ -1,3 +1,5 @@
+## Notes
+1. (2020-03-31) Av någon anledning kan jag inte ladda upp ifrån github repon till esp:n så återgår till att ha det lokalt på datorn och laddar sedan upp när färdigt, dvs uppdaterar den nuvarande filen när esp koden är klar.
 ## Logbok
 ### 2020-03-23
 * Konstruering av bilplatfroms sak
