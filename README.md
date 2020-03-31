@@ -8,3 +8,6 @@
 ### 2020-03-27
 * Påbörjan av hemsida  
 *PS redan gjort en men den behöver lite improvments. Det kan även bli så att det blir en app i slutändan.*
+### 2020-03-31
+* Fortsatt bygge av bil  
+*Satsar på bra konstruktion och vill även lära mig hur man bygger bra så lägger extra tid här*
