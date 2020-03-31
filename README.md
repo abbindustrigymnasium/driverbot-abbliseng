@@ -3,6 +3,7 @@
 2. (2020-03-31) Jag har byggt om denna bil så så många gånger nu att jag häromed ger upp! (alltså inte på allt men på bilens utseende)
 3. *Det va ingen rak linje tho men men...*
 4. (2020-03-31) ESP koden är nu klar och uppladdad. Funderar dock över att byta vilka bibliotek som används senare då detta strullar ibland.
+5. (2020-03-31) Väljer att göra en app då jag inte kan det ännu och skulle vilja lära mig.
 ## Logbok
 ### 2020-03-23
 * Konstruering av bilplatfroms sak
