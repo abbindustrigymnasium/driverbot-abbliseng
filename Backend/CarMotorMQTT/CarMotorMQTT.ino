@@ -40,7 +40,7 @@ void setup() {
   pinMode(motorPinLeftSpeed, OUTPUT);
   servo1.attach(servo1_pin);
   servo1.write(initial_position);
-  startSeq();
+  //startSeq();
 }
 
 void onConnectionEstablished(){
@@ -70,8 +70,9 @@ void onConnectionEstablished(){
   {
     dir = payload1.substring(payload1.indexOf('(')+1,payload1.lastIndexOf(':')).toInt();
     spd = payload1.substring(payload1.lastIndexOf(':')+1).toInt();
-    spd = map(spd, 0, 100, 0, 1024);
+    //spd = map(spd, 0, 100, 0, 1024);
     DriveDirSpeed(motorPinRightDir, motorPinRightSpeed, dir, spd);
+    DriveDirSpeed(motorPinLeftDir, motorPinLeftSpeed, dir, spd);
   });
   
   client.publish("abbexpectmore@gmail.com/light", "I'm online!");
