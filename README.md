@@ -1,6 +1,7 @@
 ## Notes
 1. (2020-03-31) Av någon anledning kan jag inte ladda upp ifrån github repon till esp:n så återgår till att ha det lokalt på datorn och laddar sedan upp när färdigt, dvs uppdaterar den nuvarande filen när esp koden är klar.
 2. (2020-03-31) Jag har byggt om denna bil så så många gånger nu att jag häromed ger upp! (alltså inte på allt men på bilens utseende)
+3. Det va ingen rak linje tho
 ## To-do
 1. Beräkna hastigheter och skapa diagram.
 2. Beräkna svängradie.
