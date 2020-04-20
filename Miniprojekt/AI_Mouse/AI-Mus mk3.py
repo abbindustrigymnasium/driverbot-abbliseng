@@ -23,7 +23,7 @@ class World:
         self.tile_object = None
 
     def updValue(self):
-        C.itemconfigure(self.tile_object, fill=_from_rgb((self.weight, 0, 0)))
+        # C.itemconfigure(self.tile_object, fill=_from_rgb((self.weight, 0, 0)))
         C.update()
 
 
