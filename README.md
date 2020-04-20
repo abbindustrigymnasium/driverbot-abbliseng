@@ -24,3 +24,5 @@
 *Dokumentering kommer snart*
 * Implementering av svängradie och anpassning av fart mellan de två hjulen beroende på hur den svänger.  
 *Detta undviker att den slirar i svängar, valde även att inte använda en differential då jag tänkte att detta skulle vara roligare och mer lärorikt plus att bilen blir lite mer kompakt. Det kräver dock två motorer men samtidigt hjälper båda hjulen nu till i svängarna.*
+### 2020-04-20
+* Skapande av app för styrning.
