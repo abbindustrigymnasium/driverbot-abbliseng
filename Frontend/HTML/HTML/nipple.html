@@ -7,9 +7,11 @@
 <body class="background">
     <div class="outline center">
         <div class="inner-square">
+
             <div class="left-sector">
 
             </div>
+
             <div class="center-sector">
                 <div class="mid-square"
                     style="margin-top: 0px; border-top-right-radius: 0px; border-top-left-radius: 0px;"></div>
@@ -21,14 +23,16 @@
                     </div>
                 </div>
                 <div class="mid-buttons">
-                    <div class="mid-button"></div>
-                    <div class="mid-button"></div>
+                    <div id="btn-mid" class="mid-button" onclick="pressMid('btn-mid')"></div>
+                    <div id="btn-mid-1" class="mid-button" onclick="pressMid('btn-mid-1')"></div>
                 </div>
                 <div class="bot-square"></div>
             </div>
+
             <div class="right-sector">
 
             </div>
+
         </div>
     </div>
 </body>
@@ -36,7 +40,12 @@
 </html>
 
 <script> 
-
+    function pressMid(btn) {
+        document.getElementById(btn).setAttribute("class", "mid-button-pressed")
+        setTimeout(function(){
+            document.getElementById(btn).setAttribute("class", "mid-button")
+        }, 1000)
+    }
 </script>
 
 <style>
@@ -51,7 +60,7 @@
     .outline {
         border-radius: 10px;
         background-color: #D0D0D0;
-        width: 800px;
+        width: 850px;
         height: 400px;
         box-shadow: #181818 10px 10px;
         /* Shadow gradiant */
@@ -63,7 +72,7 @@
         top: 50%;
         left: 50%;
         margin-top: -200px;
-        margin-left: -400px;
+        margin-left: -430px;
     }
 
     .inner-square {
@@ -127,6 +136,14 @@
         background-color: #181818;
         border-radius: 15px;
         box-shadow: #000000 5px 5px;
+    }
+    .mid-button-pressed{
+        width: 90px;
+        height: 30px;
+        margin-top: 45px;
+        margin-left: 25px;
+        background-color: #181818;
+        border-radius: 15px;
     }
     .mid-text-box{
         display: grid;
