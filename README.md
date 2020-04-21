@@ -27,3 +27,6 @@
 ### 2020-04-20
 * Skapande av app för styrning.
 * Byte till hemsida då expo-cli slutatde fungera efter uppdatering p.g.a. admin permissions. dvs kunde inte uppdateras korrekt och paja sig själv.
+### 2020-04-21
+* Arbete på hemsida
+*Väljer att ej ha en joystick då det verkar som nästan alla gjort det så tycker det blivit lite uttjatat plus att jag vill ha mer av en utmaning gällande hur man placerarar saker på specifika platser på skärmen (layout).*
