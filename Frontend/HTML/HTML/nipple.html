@@ -9,7 +9,16 @@
         <div class="inner-square">
 
             <div class="left-sector">
-
+                <div class="a">
+                    <div class="up"></div>
+                    <div class="middle1"></div>
+                    <div class="down"></div>
+                </div>
+                <div class="b">
+                    <div class="left"></div>
+                    <div class="middle"></div>
+                    <div class="right"></div>
+                </div>
             </div>
 
             <div class="center-sector">
@@ -59,7 +68,7 @@
         document.getElementById(btn).setAttribute("class", style1)
         setTimeout(function () {
             document.getElementById(btn).setAttribute("class", style2)
-        }, 700)
+        }, 200)
     }
 </script>
 
@@ -109,7 +118,7 @@
     }
 
     .left-sector {
-        border: green dotted 5px;
+        position: relative;
     }
 
     .center-sector {
@@ -234,5 +243,21 @@
         margin-top: -10px;
         margin-left: 80px;
         font-size: 15px;
+    }
+    .a{
+        background-color: #D0D0D0;
+        margin-left: 40px;
+        margin-top: 120px;
+        width: 180px;
+        height: 70px;
+        border-radius: 3px;
+    }
+    .b{
+        background-color: #D0D0D0;
+        margin-left: 95px;
+        margin-top: -125px;
+        width: 70px;
+        height: 180px;
+        border-radius: 3px;
     }
 </style>
