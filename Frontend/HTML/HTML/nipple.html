@@ -22,15 +22,30 @@
                         <span>START</span>
                     </div>
                 </div>
-                <div class="mid-buttons">
-                    <div id="btn-mid" class="mid-button" onclick="pressMid('btn-mid')"></div>
-                    <div id="btn-mid-1" class="mid-button" onclick="pressMid('btn-mid-1')"></div>
+                <div class="mid-buttons border">
+                    <div id="btn-mid" class="mid-button" onclick="pressMid('btn-mid', 'mid-button-pressed', 'mid-button')"></div>
+                    <div id="btn-mid-1" class="mid-button" onclick="pressMid('btn-mid-1', 'mid-button-pressed', 'mid-button')"></div>
                 </div>
                 <div class="bot-square"></div>
             </div>
 
             <div class="right-sector">
-
+                <div class="text-field">
+                    <span style="font-family: Nintendo; font-size: 25px;">Spetsen</span>
+                    <span class="r-mark">®</span>
+                </div>
+                <div class="buttons">
+                    <div class="square">
+                        <div id="B"class="circle" onclick="pressMid('B', 'circle-pressed', 'circle')"></div>
+                    </div>
+                    <div class="square">
+                        <div id="A" class="circle" onclick="pressMid('A', 'circle-pressed', 'circle')"></div>
+                    </div>
+                </div>
+                <div class="text-again">
+                    <span>B</span>
+                    <span style="margin-left: 50px;">A</span>
+                </div>
             </div>
 
         </div>
@@ -39,12 +54,12 @@
 
 </html>
 
-<script> 
-    function pressMid(btn) {
-        document.getElementById(btn).setAttribute("class", "mid-button-pressed")
-        setTimeout(function(){
-            document.getElementById(btn).setAttribute("class", "mid-button")
-        }, 1000)
+<script>
+    function pressMid(btn, style1, style2) {
+        document.getElementById(btn).setAttribute("class", style1)
+        setTimeout(function () {
+            document.getElementById(btn).setAttribute("class", style2)
+        }, 700)
     }
 </script>
 
@@ -53,6 +68,11 @@
         font-family: NES;
         src: url("./Fonts/NES.ttf");
     }
+    @font-face {
+        font-family: Nintendo;
+        src: url("./Fonts/Nintendo.ttf");
+    }
+
     .background {
         background-color: darkslategray;
     }
@@ -97,7 +117,7 @@
     }
 
     .right-sector {
-        border: green dotted 5px;
+        position: relative;
     }
 
     .mid-square {
@@ -118,7 +138,8 @@
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
     }
-    .mid-buttons{
+
+    .mid-buttons {
         background-color: #D0D0D0;
         border-radius: 10px;
         margin-top: 10px;
@@ -128,7 +149,8 @@
         grid-template-columns: 1fr 1fr;
         grid-template-rows: auto;
     }
-    .mid-button{
+
+    .mid-button {
         width: 90px;
         height: 30px;
         margin-top: 35px;
@@ -137,7 +159,8 @@
         border-radius: 15px;
         box-shadow: #000000 5px 5px;
     }
-    .mid-button-pressed{
+
+    .mid-button-pressed {
         width: 90px;
         height: 30px;
         margin-top: 45px;
@@ -145,7 +168,8 @@
         background-color: #181818;
         border-radius: 15px;
     }
-    .mid-text-box{
+
+    .mid-text-box {
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-template-rows: auto;
@@ -153,11 +177,62 @@
         text-align: center;
         height: 100%;
     }
+
     span {
         margin-top: 12.5px;
         margin-left: 10px;
         color: #EE1515;
         font-family: 'NES';
         font-size: 20px;
+    }
+    .text-field{
+        position: absolute;
+        margin-left: 50px;
+        margin-top: 75px;
+    }
+    .r-mark{
+        position: absolute;
+        margin-top: -6px;
+        margin-left: 0px;
+        font-family: sans-serif;
+        font-size: 16;
+    }
+    .buttons{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+    }
+    .square{
+        margin-top: 175px;
+        margin-left: 20px;
+        width: 100px;
+        height: 100px;
+        background-color: #D0D0D0;
+        border-radius: 10px;
+    }
+    .circle{
+        width: 80px;
+        height: 80px;
+        background-color: #EE1515;
+        margin-top: 5px;
+        margin-left: 5px;
+        border-radius: 40px;
+        box-shadow: #800000 5px 5px;
+    }
+    .circle-pressed{
+        width: 80px;
+        height: 80px;
+        background-color: #EE1515;
+        margin-top: 10px;
+        margin-left: 10px;
+        border-radius: 40px;
+    }
+    .text-again{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+        margin-top: -10px;
+        margin-left: 80px;
+        font-size: 15px;
     }
 </style>
