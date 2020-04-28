@@ -10,15 +10,23 @@
 
             <div class="left-sector">
                 <div class="a">
-                    <div class="left"></div>
-                    <div class="right"></div>
+                    <div id="left" class="left" onclick="pressMid('left', 'left shadow-left', 'left')">
+                        <div class="triangle-left"></div>
+                    </div>
+                    <div id="right" class="right" onclick="pressMid('right', 'right shadow-right', 'right')">
+                        <div class="triangle-right"></div>
+                    </div>
                 </div>
                 <div class="b">
-                    <div class="up"></div>
+                    <div id="up" class="up" onclick="pressMid('up', 'up shadow-up', 'up')">
+                        <div class="triangle-up"></div>
+                    </div>
                     <div class="middle">
                         <div class="middle1"></div>
                     </div>
-                    <div class="down"></div>
+                    <div id="down" class="down" onclick="pressMid('down', 'down shadow-down', 'down')">
+                        <div class="triangle-down"></div>
+                    </div>
                 </div>
             </div>
 
@@ -267,8 +275,8 @@
         margin-left: 5px;
         width: 60px;
         height: 60px;
-        background-color: #181818;
-        border-right: #202020 10px solid;
+        background-color: #191919;
+        border-right: #151515 10px solid;
         border-top-left-radius: 5px;
         border-bottom-left-radius: 5px;
     }
@@ -276,10 +284,10 @@
         position: absolute;
         width: 60px;
         height: 60px;
-        background-color: #181818;
+        background-color: #191919;
         margin-left: 135px;
         margin-top: 5px;
-        border-left: #202020 10px solid;
+        border-left: #151515 10px solid;
         border-top-right-radius: 5px;
         border-bottom-right-radius: 5px;
     }
@@ -287,7 +295,7 @@
         position: absolute;
         width: 60px;
         height: 60px;
-        background-color: #181818;
+        background-color: #191919;
         margin-top: 75px;
         margin-left: 5px;
     }
@@ -303,10 +311,10 @@
         position: absolute;
         width: 60px;
         height: 60px;
-        background-color: #181818;
+        background-color: #191919;
         margin-top: 5px;
         margin-left: 5px;
-        border-bottom: 10px #202020 solid;
+        border-bottom: 10px #151515 solid;
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
     }
@@ -314,11 +322,59 @@
         position: absolute;
         width: 60px;
         height: 60px;
-        background-color: #181818;
+        background-color: #191919;
         margin-top: 135px;
         margin-left: 5px;
-        border-top: 10px #202020 solid;
+        border-top: 10px #151515 solid;
         border-bottom-left-radius: 5px;
         border-bottom-right-radius: 5px;
+    }
+    .triangle-up{
+        width: 0;
+        height: 0;
+        border-left: 20px solid transparent;
+        border-right: 20px solid transparent;
+        border-bottom: 40px solid #151515;
+        margin-left: 9px;
+        margin-top: 9px;
+    }
+    .triangle-down{
+        width: 0;
+        height: 0;
+        border-left: 20px solid transparent;
+        border-right: 20px solid transparent;
+        border-top: 40px solid #151515;
+        margin-left: 9px;
+        margin-top: 9px;
+    }
+    .triangle-left{
+        width: 0;
+        height: 0;
+        border-top: 20px solid transparent;
+        border-right: 40px solid #151515;
+        border-bottom: 20px solid transparent;
+        margin-top: 9px;
+        margin-left: 9px;
+    }
+    .triangle-right{
+        width: 0;
+        height: 0;
+        border-top: 20px solid transparent;
+        border-left: 40px solid #151515;
+        border-bottom: 20px solid transparent;
+        margin-top: 9px;
+        margin-left: 9px;
+    }
+    .shadow-up{
+        box-shadow: inset #101010 5px 5px 12px;
+    }
+    .shadow-down{
+        box-shadow: inset -8px -6px 12px #101010;
+    }
+    .shadow-left{
+        box-shadow: inset 8px -6px 12px #101010;
+    }
+    .shadow-right{
+        box-shadow: inset -8px 6px 12px #101010;
     }
 </style>
