@@ -382,21 +382,21 @@ for i in WorldArray:
 
 while True:
     # Uncomment for survival aspect (best with multiple players)
-    for play in player:
-        # print(play.energy)
-        if play.energy > 0:
-            time.sleep(play.speed)
-            play.move()
-            play.checkHit()
-            updWalkedTiles()
-            play.energy -= 1
-        else:
-            C.delete(play.soul)
-            player.remove(play)
-        # time.sleep(play.speed)
-        # play.move()
-        # play.checkHit()
-        # updWalkedTiles()
+    # for play in player:
+    #     # print(play.energy)
+    #     if play.energy > 0:
+    #         time.sleep(play.speed)
+    #         play.move()
+    #         play.checkHit()
+    #         updWalkedTiles()
+    #         play.energy -= 1
+    #     else:
+    #         C.delete(play.soul)
+    #         player.remove(play)
+        time.sleep(play.speed)
+        play.move()
+        play.checkHit()
+        updWalkedTiles()
     if len(player) == 0:
         break
 
