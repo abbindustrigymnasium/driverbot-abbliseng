@@ -4,6 +4,8 @@ Mitt miniprojekt heter AI_mouse och är basserat på instruktionerna i denna lä
 Musens mål är att ta sig till osten vars effekt/lukt ökar med jämna mellanrum, detta innebär att musen alltid hittar osten tillslut (om ej överlevnadsläget är på då musen kan "dö" om den för slut på energi). Om musen lyckas äta osten (stå på samma ruta) skapas en ny ost på ett slumpat ställe och effekten av den tidigare osten och musens spår försvinner.
 ### Kör projektet
 Efter att ha laddat ner filerna behöver du bara starta och köra filen **AI-Mus_finished_project**.
+### Inställningar
+
 
 ### Kända buggar/fel som finns och eventuell lösning
 * Musen cirklulerar ibland osten utan att äta den.
