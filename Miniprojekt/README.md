@@ -5,7 +5,7 @@ Musens mål är att ta sig till osten vars effekt/lukt ökar med jämna mellanru
 ### Kör projektet
 Efter att ha laddat ner filerna behöver du bara starta och köra filen **AI-Mus_finished_project**.
 ### Inställningar
-
+![Image of size setting](https://github.com/abbindustrigymnasium/driverbot-abbliseng/blob/master/Miniprojekt/pictures/window_size.PNG)
 
 ### Kända buggar/fel som finns och eventuell lösning
 * Musen cirklulerar ibland osten utan att äta den.
