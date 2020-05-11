@@ -68,13 +68,13 @@ class World:
         self.tile_object = None
 
     def updValue(self):
-        self.weight += 1
         if debug:
+            # Uncomment for visual weight map for debugging.
             try:
-                # Uncomment for visual weight map for debugging.
                 C.itemconfigure(self.tile_object, fill=_from_rgb((self.weight, 0, 0)))
             except:
-                None
+                print("This tile",self.tile,"weight ("+str(self.weight)+") could not be painted correctly but the effect is active.")
+                C.itemconfigure(self.tile_object, fill="purple")
         C.update()
 
 # The "mouse" character, in charge of itself and communicating to the world for senses.
@@ -198,7 +198,7 @@ class cheese:  # Class for food object, in charge of holding all food attributes
             getcoord(self.tile[0]-1, self.tile[1]-1), fill="#ffa600")
         self.effect = []
         ID = (self.tile[1]-1)*sideLength + self.tile[0]-1
-        WorldArray[ID].weight = -100
+        WorldArray[ID].weight = -1000
 
     def smell(self):
         for i in range(self.area):
@@ -208,7 +208,7 @@ class cheese:  # Class for food object, in charge of holding all food attributes
                 self.effect.append([self.tile[0]+(i+1), self.tile[1]])
                 # Calculate weights and update corresponding world tile object.
                 ID = (self.tile[1]-1)*sideLength+self.tile[0]+(i+1)-1
-                WorldArray[ID].weight = math.floor(100*(i/sideLength))
+                WorldArray[ID].weight = math.floor(100*(i/sideLength))-25
                 WorldArray[ID].updValue()
             #
             if (self.tile[0]-(i+1) < 1):
@@ -216,7 +216,7 @@ class cheese:  # Class for food object, in charge of holding all food attributes
             else:
                 self.effect.append([self.tile[0]-(i+1), self.tile[1]])
                 ID = (self.tile[1]-1)*sideLength+self.tile[0]-(i+1)-1
-                WorldArray[ID].weight = math.floor(100*(i/sideLength))
+                WorldArray[ID].weight = math.floor(100*(i/sideLength))-25
                 WorldArray[ID].updValue()
             #
             if (self.tile[1]+(i+1) > sideLength):
@@ -224,7 +224,7 @@ class cheese:  # Class for food object, in charge of holding all food attributes
             else:
                 self.effect.append([self.tile[0], self.tile[1]+(i+1)])
                 ID = (self.tile[1]+(i+1)-1)*sideLength+self.tile[0]-1
-                WorldArray[ID].weight = math.floor(100*(i/sideLength))
+                WorldArray[ID].weight = math.floor(100*(i/sideLength))-25
                 WorldArray[ID].updValue()
             #
             if (self.tile[1]-(i+1) < 1):
@@ -232,7 +232,7 @@ class cheese:  # Class for food object, in charge of holding all food attributes
             else:
                 self.effect.append([self.tile[0], self.tile[1]-(i+1)])
                 ID = (self.tile[1]-(i+1)-1)*sideLength+self.tile[0]-1
-                WorldArray[ID].weight = math.floor(100*(i/sideLength))
+                WorldArray[ID].weight = math.floor(100*(i/sideLength))-25
                 WorldArray[ID].updValue()
             if i == self.area-1:
                 for j in range(i+1):
@@ -364,7 +364,7 @@ for i in range(len(Map)):
 
 
 
-
+#Generate starting players and food
 for i in range(cheese_amount):
     food.append(cheese())
     food[len(food)-1].smell()
@@ -373,6 +373,7 @@ for i in range(player_amount):
         [randint(1, sideLength), randint(1, sideLength)], "blue", 0.1, 50))
     player[len(player)-1].create()
 
+#Update each world tile before start
 for i in WorldArray:
     try:
         i.updValue()
