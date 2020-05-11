@@ -9,6 +9,8 @@ Musens mål är att ta sig till osten vars effekt/lukt ökar med jämna mellanru
 * * Detta beror på att den ibland beräknar ostens vikt fel och att närliggande rutor anses bättre. Ska vara löst nu (2020-05-11).
 * Om flera möss måste mössen vänta på att tidigare möss rört sig innan den kan röra sig (turn)
 * * För att lösa detta kan man skapa en thread vid varje mus rörelse. (Inte implementerat)
+## Bil
+Kommer sen.
 # Extra
 ## Notes
 1. (2020-03-31) Av någon anledning kan jag inte ladda upp ifrån github repon till esp:n så återgår till att ha det lokalt på datorn och laddar sedan upp när färdigt, dvs uppdaterar den nuvarande filen när esp koden är klar.
@@ -44,3 +46,4 @@ Musens mål är att ta sig till osten vars effekt/lukt ökar med jämna mellanru
 *Väljer att ej ha en joystick då det verkar som nästan alla gjort det så tycker det blivit lite uttjatat plus att jag vill ha mer av en utmaning gällande hur man placerarar saker på specifika platser på skärmen (layout).*
 ### 2020-05-11
 * Förberedelse inför redovisning och förfining av github sidan :)
+* UI för miniprojekt och lite bug fixar.
