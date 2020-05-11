@@ -9,4 +9,4 @@ Efter att ha laddat ner filerna behöver du bara starta och köra filen **AI-Mus
 * Musen cirklulerar ibland osten utan att äta den.
 * * Detta beror på att den ibland beräknar ostens vikt fel och att närliggande rutor anses bättre. Ska vara löst nu (2020-05-11).
 * Om flera möss måste mössen vänta på att tidigare möss rört sig innan den kan röra sig (turn)
-* * För att lösa detta kan man skapa en thread vid varje mus rörelse. (Inte implementerat)
+* * För att lösa detta kan man skapa en thread för varje mus rörelse.
