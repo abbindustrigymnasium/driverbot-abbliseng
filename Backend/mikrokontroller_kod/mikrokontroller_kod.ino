@@ -57,23 +57,13 @@ void onConnectionEstablished(){
     turn = payload.substring(payload.lastIndexOf(':')+1).toInt();
     // If the turn is negative remeber this and make it an absolute value
     // This needs to be saved to later determine if right or left turn.
-    if (turn < 0){
-      turn = turn*(-1);
-      neg = true;
-    }
     //Calculate speed diff between inner and outer wheel
     float placeholder = -0.0082*turn+1;
     int spd1 = spd * placeholder;
-    if (neg){
-      DriveDirSpeed(motorPinRightDir, motorPinRightSpeed, dir, spd);
-      DriveDirSpeed(motorPinLeftDir, motorPinLeftSpeed, dir, spd1);
-      servo1.write(90-turn);
-    }
-    else{
-      DriveDirSpeed(motorPinRightDir, motorPinRightSpeed, dir, spd1);
-      DriveDirSpeed(motorPinLeftDir, motorPinLeftSpeed, dir, spd);
-      servo1.write(90+turn);
-    }
+    DriveDirSpeed(motorPinRightDir, motorPinRightSpeed, dir, spd1);
+    DriveDirSpeed(motorPinLeftDir, motorPinLeftSpeed, dir, spd);
+    servo1.write(turn);
+    
   });
   //Make sure your actually here (Good way to know if lost connection issue is present)
   client.publish("abbexpectmore@gmail.com/light", "I'm online!");
