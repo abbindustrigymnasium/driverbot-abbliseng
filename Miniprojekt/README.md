@@ -7,9 +7,11 @@ Efter att ha laddat ner filerna behöver du bara starta och köra filen **AI-Mus
 ### Inställningar
 ![Image of size setting](https://github.com/abbindustrigymnasium/driverbot-abbliseng/blob/master/Miniprojekt/pictures/window_size.PNG)  
 ![Image of map size setting](https://github.com/abbindustrigymnasium/driverbot-abbliseng/blob/master/Miniprojekt/pictures/map_size.PNG)  
-![Image of player/cheese setting](https://github.com/abbindustrigymnasium/driverbot-abbliseng/blob/master/Miniprojekt/pictures/player_cheese.PNG)
-* Survival Mode
-* Normal Mode
+![Image of player/cheese setting](https://github.com/abbindustrigymnasium/driverbot-abbliseng/blob/master/Miniprojekt/pictures/player_cheese.PNG)  
+**Survival Mode**  
+![Image of survival code](https://github.com/abbindustrigymnasium/driverbot-abbliseng/blob/master/Miniprojekt/pictures/survival.PNG)  
+**Normal Mode**  
+![Image of normal code](https://github.com/abbindustrigymnasium/driverbot-abbliseng/blob/master/Miniprojekt/pictures/normal.PNG)
 
 ### Kända buggar/fel som finns och eventuell lösning
 * Musen cirklulerar ibland osten utan att äta den.
