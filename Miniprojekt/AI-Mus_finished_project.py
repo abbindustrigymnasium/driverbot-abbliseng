@@ -4,7 +4,7 @@ import time
 from tkinter import *
 # Generate tkinter window
 master = Tk()
-size = 600  # Change window size (does not effect amout of tiles)
+size = 800  # Change window size (does not effect amout of tiles)
 # Canvas
 C = Canvas(master, bg='black', height=size, width=size)
 C.pack()
@@ -310,7 +310,7 @@ def updWalkedTiles():
 # Generate blueprint map
 walked = []
 
-sideLength = 15  # Change to increase/decrease map size.
+sideLength = 5  # Change to increase/decrease map size.
 
 Map = [[0 for x in range(sideLength)] for y in range(sideLength)]
 WorldArray = []
@@ -319,7 +319,7 @@ distX = 0
 sizeValue = size/sideLength
 current_map = []
 
-cheese_amount = 1  # Change to increase/decrease amout of start cheese
+cheese_amount = 10  # Change to increase/decrease amout of start cheese
 player_amount = 1  # Change to increase/decrease amout of start players
 
 
@@ -382,17 +382,17 @@ for i in WorldArray:
 
 while True:
     # Uncomment for survival aspect (best with multiple players)
-    # for play in player:
-    #     # print(play.energy)
-    #     if play.energy > 0:
-    #         time.sleep(play.speed)
-    #         play.move()
-    #         play.checkHit()
-    #         updWalkedTiles()
-    #         play.energy -= 1
-    #     else:
-    #         C.delete(play.soul)
-    #         player.remove(play)
+    for play in player:
+        # print(play.energy)
+        # if play.energy > 0:
+        #     time.sleep(play.speed)
+        #     play.move()
+        #     play.checkHit()
+        #     updWalkedTiles()
+        #     play.energy -= 1
+        # else:
+        #     C.delete(play.soul)
+        #     player.remove(play)
         time.sleep(play.speed)
         play.move()
         play.checkHit()
