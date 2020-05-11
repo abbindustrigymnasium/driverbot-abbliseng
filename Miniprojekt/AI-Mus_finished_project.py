@@ -319,8 +319,8 @@ distX = 0
 sizeValue = size/sideLength
 current_map = []
 
-cheese_amount = 1  # Change to increase/decrease amout of cheese
-player_amount = 1  # Change to increase/decrease amout of players
+cheese_amount = 1  # Change to increase/decrease amout of start cheese
+player_amount = 1  # Change to increase/decrease amout of start players
 
 
 def _from_rgb(rgb):
