@@ -119,6 +119,7 @@ for row in range(0,h):
 Mouse = C.create_rectangle(getcoord(mouse[0],mouse[1]),fill="brown")
 while energy > 0:
     generateStep()
+    #Change to -= 1 for energy fuction
     energy -= 1
 createCheese()
 moveMouse(steps, Mouse)
