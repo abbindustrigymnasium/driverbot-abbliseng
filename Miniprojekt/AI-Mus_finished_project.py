@@ -62,10 +62,10 @@ b = Button(master, text="Debug (on/off)", command=debugToggle)
 b1 = Button(master, textvariable=btn_text, command=addPlayer)
 b2 = Button(master, textvariable=btn_text1, command=addFood)
 b3 = Button(master, text="Pause/Play", command=pause)
-b.pack()
-b1.pack()
-b2.pack()
-b3.pack()
+b.pack(side=LEFT)
+b1.pack(side=LEFT)
+b2.pack(side=LEFT)
+b3.pack(side=LEFT)
 
 
 # Define classes
