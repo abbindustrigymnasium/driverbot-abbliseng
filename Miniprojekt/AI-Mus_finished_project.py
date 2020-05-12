@@ -14,6 +14,7 @@ C.pack()
 debug = False  # Boolean
 food = []
 player = []
+paused = False
 
 def debugToggle():
     global debug
@@ -45,6 +46,14 @@ def addFood():
     makeCheese()
     btn_text1.set("Add food ["+str(len(food))+"]")
 
+def pause():
+    global paused
+    if paused:
+        paused = False
+    else:
+        paused = True
+    print(paused)
+
 btn_text = StringVar()
 btn_text1 = StringVar()
 btn_text1.set("Add food ["+str(len(food)+1)+"]")
@@ -52,9 +61,11 @@ btn_text.set("Add player ["+str(len(player)+1)+"]")
 b = Button(master, text="Debug (on/off)", command=debugToggle)
 b1 = Button(master, textvariable=btn_text, command=addPlayer)
 b2 = Button(master, textvariable=btn_text1, command=addFood)
+b3 = Button(master, text="Pause/Play", command=pause)
 b.pack()
 b1.pack()
 b2.pack()
+b3.pack()
 
 
 # Define classes
@@ -310,7 +321,7 @@ def updWalkedTiles():
 # Generate blueprint map
 walked = []
 
-sideLength = 5  # Change to increase/decrease map size.
+sideLength = 15  # Change to increase/decrease map size.
 
 Map = [[0 for x in range(sideLength)] for y in range(sideLength)]
 WorldArray = []
@@ -319,7 +330,7 @@ distX = 0
 sizeValue = size/sideLength
 current_map = []
 
-cheese_amount = 10  # Change to increase/decrease amout of start cheese
+cheese_amount = 1  # Change to increase/decrease amout of start cheese
 player_amount = 1  # Change to increase/decrease amout of start players
 
 
@@ -382,22 +393,25 @@ for i in WorldArray:
 
 while True:
     # Uncomment for survival aspect (best with multiple players)
-    for play in player:
-        # print(play.energy)
-        # if play.energy > 0:
-        #     time.sleep(play.speed)
-        #     play.move()
-        #     play.checkHit()
-        #     updWalkedTiles()
-        #     play.energy -= 1
-        # else:
-        #     C.delete(play.soul)
-        #     player.remove(play)
-        time.sleep(play.speed)
-        play.move()
-        play.checkHit()
-        updWalkedTiles()
-    if len(player) == 0:
-        break
+    if paused:
+        C.update()
+    else:
+        for play in player:
+            # print(play.energy)
+            # if play.energy > 0:
+            #     time.sleep(play.speed)
+            #     play.move()
+            #     play.checkHit()
+            #     updWalkedTiles()
+            #     play.energy -= 1
+            # else:
+            #     C.delete(play.soul)
+            #     player.remove(play)
+            time.sleep(play.speed)
+            play.move()
+            play.checkHit()
+            updWalkedTiles()
+        if len(player) == 0:
+            break
 
 mainloop()
