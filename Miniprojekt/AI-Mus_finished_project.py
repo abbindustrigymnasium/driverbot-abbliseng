@@ -45,11 +45,11 @@ def addPlayer():
     player.append(humanObject(
         [randint(1, sideLength), randint(1, sideLength)], "blue", 0.1, 50))
     player[len(player)-1].create()
-    btn_text.set("Add player ["+str(len(player))+"]")
+    # btn_text.set("Add player ["+str(len(player))+"]")
 
 def addFood():
     makeCheese()
-    btn_text1.set("Add food ["+str(len(food))+"]")
+    # btn_text1.set("Add food ["+str(len(food))+"]")
 
 def pause():
     global paused
@@ -82,7 +82,7 @@ b3 = Button(master, text="Pause/Play", command=pause, bg="pink")
 optionBtn = Button(master, text="Options", command=options, bg="grey")
 b.pack(side=LEFT)
 b3.pack(side=LEFT)
-optionBtn.pack(side=LEFT)
+optionBtn.pack(side=RIGHT)
 
 
 # Define classes
