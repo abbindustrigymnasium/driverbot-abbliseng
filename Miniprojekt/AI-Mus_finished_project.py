@@ -4,7 +4,7 @@ import time
 from tkinter import *
 # Generate tkinter window
 master = Tk()
-size = 800  # Change window size (does not effect amout of tiles)
+size = 400  # Change window size (does not effect amout of tiles)
 # Canvas
 C = Canvas(master, bg='black', height=size, width=size)
 C.pack()
@@ -15,6 +15,11 @@ debug = False  # Boolean
 food = []
 player = []
 paused = False
+sideLength = 10  # Change to increase/decrease map size.
+
+
+
+
 
 def debugToggle():
     global debug
@@ -54,18 +59,30 @@ def pause():
         paused = True
     print(paused)
 
-btn_text = StringVar()
-btn_text1 = StringVar()
-btn_text1.set("Add food ["+str(len(food)+1)+"]")
-btn_text.set("Add player ["+str(len(player)+1)+"]")
-b = Button(master, text="Debug (on/off)", command=debugToggle)
-b1 = Button(master, textvariable=btn_text, command=addPlayer)
-b2 = Button(master, textvariable=btn_text1, command=addFood)
-b3 = Button(master, text="Pause/Play", command=pause)
+optionToggle = False
+optionWindow = None
+def options():
+    global optionToggle
+    if optionToggle:
+        optionToggle = False
+    else:
+        optionToggle = True
+        optionWindow = Tk()
+        addPlayers = Button(optionWindow, text="Add player", command=addPlayer, width=30)
+        addFoods = Button(optionWindow, text="Add food", command=addFood, width=30)
+        addPlayers.pack()
+        addFoods.pack()
+
+# btn_text = StringVar()
+# btn_text1 = StringVar()
+# btn_text1.set("Add food ["+str(len(food)+1)+"]")
+# btn_text.set("Add player ["+str(len(player)+1)+"]")
+b = Button(master, text="Debug (on/off)" , bg='orange' , command=debugToggle)
+b3 = Button(master, text="Pause/Play", command=pause, bg="pink")
+optionBtn = Button(master, text="Options", command=options, bg="grey")
 b.pack(side=LEFT)
-b1.pack(side=LEFT)
-b2.pack(side=LEFT)
 b3.pack(side=LEFT)
+optionBtn.pack(side=LEFT)
 
 
 # Define classes
@@ -321,7 +338,7 @@ def updWalkedTiles():
 # Generate blueprint map
 walked = []
 
-sideLength = 15  # Change to increase/decrease map size.
+
 
 Map = [[0 for x in range(sideLength)] for y in range(sideLength)]
 WorldArray = []
