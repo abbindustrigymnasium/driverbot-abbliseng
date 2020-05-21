@@ -1,0 +1,335 @@
+
+    @font-face {
+        font-family: NES;
+        src: url("./Fonts/NES.ttf");
+    }
+
+    @font-face {
+        font-family: Nintendo;
+        src: url("./Fonts/Nintendo.ttf");
+    }
+
+    .background {
+        background-color: darkslategray;
+    }
+
+    .outline {
+        border-radius: 10px;
+        background-color: #D0D0D0;
+        width: 850px;
+        height: 400px;
+        box-shadow: #181818 10px 10px;
+        position: relative;
+        /* Shadow gradiant */
+        /* -webkit-box-shadow: 29px 21px 68px 0px rgba(0,0,0,0.75); */
+    }
+
+    .center {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        margin-top: -200px;
+        margin-left: -430px;
+    }
+
+    .inner-square {
+        display: grid;
+        position: absolute;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: auto;
+        border-radius: 5px;
+        background-color: #282828;
+        margin-left: 30px;
+        margin-right: 30px;
+        margin-bottom: 30px;
+        margin-top: 60px;
+        height: 310px;
+        width: 790px
+    }
+
+    .left-sector {
+        position: relative;
+    }
+
+    .center-sector {
+        position: relative;
+    }
+
+    .right-sector {
+        position: relative;
+    }
+
+    .mid-square {
+        position: relative;
+        background-color: #BDAEAD;
+        width: 100%;
+        height: 45px;
+        margin-top: 15px;
+        border-radius: 10px;
+    }
+
+    .bot-square {
+        position: absolute;
+        bottom: 0px;
+        background-color: #BDAEAD;
+        height: 20px;
+        width: 100%;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    .mid-buttons {
+        background-color: #D0D0D0;
+        border-radius: 10px;
+        margin-top: 10px;
+        width: 100%;
+        height: 100px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+    }
+
+    .mid-button {
+        width: 90px;
+        height: 30px;
+        margin-top: 35px;
+        margin-left: 15px;
+        background-color: #181818;
+        border-radius: 15px;
+        box-shadow: #000000 5px 5px;
+    }
+
+    .mid-button-pressed {
+        width: 90px;
+        height: 30px;
+        margin-top: 45px;
+        margin-left: 25px;
+        background-color: #181818;
+        border-radius: 15px;
+    }
+
+    .mid-text-box {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+        background-color: transparent;
+        text-align: center;
+        height: 100%;
+    }
+
+    span {
+        margin-top: 12.5px;
+        margin-left: 10px;
+        color: #EE1515;
+        font-family: 'NES';
+        font-size: 20px;
+    }
+
+    .text-field {
+        position: absolute;
+        margin-left: 50px;
+        margin-top: 75px;
+    }
+
+    .r-mark {
+        position: absolute;
+        margin-top: -6px;
+        margin-left: 0px;
+        font-family: sans-serif;
+        font-size: 16;
+    }
+
+    .buttons {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+    }
+
+    .square {
+        margin-top: 175px;
+        margin-left: 20px;
+        width: 100px;
+        height: 100px;
+        background-color: #D0D0D0;
+        border-radius: 10px;
+    }
+
+    .circle {
+        width: 80px;
+        height: 80px;
+        background-color: #EE1515;
+        margin-top: 5px;
+        margin-left: 5px;
+        border-radius: 40px;
+        box-shadow: #800000 5px 5px;
+    }
+
+    .circle-pressed {
+        width: 80px;
+        height: 80px;
+        background-color: #EE1515;
+        margin-top: 10px;
+        margin-left: 10px;
+        border-radius: 40px;
+    }
+
+    .text-again {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+        margin-top: -10px;
+        margin-left: 80px;
+        font-size: 15px;
+    }
+
+    .a {
+        background-color: #D0D0D0;
+        margin-left: 30px;
+        margin-top: 120px;
+        width: 210px;
+        height: 70px;
+        border-radius: 5px;
+    }
+
+    .b {
+        background-color: #D0D0D0;
+        margin-left: 100px;
+        margin-top: -140px;
+        width: 70px;
+        height: 210px;
+        border-radius: 5px;
+    }
+
+    .left {
+        position: absolute;
+        margin-top: 5px;
+        margin-left: 5px;
+        width: 60px;
+        height: 60px;
+        background-color: #191919;
+        border-right: #151515 10px solid;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
+
+    .right {
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        background-color: #191919;
+        margin-left: 135px;
+        margin-top: 5px;
+        border-left: #151515 10px solid;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+
+    .middle {
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        background-color: #191919;
+        margin-top: 75px;
+        margin-left: 5px;
+    }
+
+    .middle1 {
+        width: 50px;
+        height: 50px;
+        margin-top: 5px;
+        margin-left: 5px;
+        background-color: #151515;
+        border-radius: 25px;
+    }
+
+    .up {
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        background-color: #191919;
+        margin-top: 5px;
+        margin-left: 5px;
+        border-bottom: 10px #151515 solid;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+
+    .down {
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        background-color: #191919;
+        margin-top: 135px;
+        margin-left: 5px;
+        border-top: 10px #151515 solid;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+
+    .triangle-up {
+        width: 0;
+        height: 0;
+        border-left: 20px solid transparent;
+        border-right: 20px solid transparent;
+        border-bottom: 40px solid #151515;
+        margin-left: 9px;
+        margin-top: 9px;
+    }
+
+    .triangle-down {
+        width: 0;
+        height: 0;
+        border-left: 20px solid transparent;
+        border-right: 20px solid transparent;
+        border-top: 40px solid #151515;
+        margin-left: 9px;
+        margin-top: 9px;
+    }
+
+    .triangle-left {
+        width: 0;
+        height: 0;
+        border-top: 20px solid transparent;
+        border-right: 40px solid #151515;
+        border-bottom: 20px solid transparent;
+        margin-top: 9px;
+        margin-left: 9px;
+    }
+
+    .triangle-right {
+        width: 0;
+        height: 0;
+        border-top: 20px solid transparent;
+        border-left: 40px solid #151515;
+        border-bottom: 20px solid transparent;
+        margin-top: 9px;
+        margin-left: 9px;
+    }
+
+    .shadow-up {
+        box-shadow: inset #101010 5px 5px 12px;
+    }
+
+    .shadow-down {
+        box-shadow: inset -8px -6px 12px #101010;
+    }
+
+    .shadow-left {
+        box-shadow: inset 8px -6px 12px #101010;
+    }
+
+    .shadow-right {
+        box-shadow: inset -8px 6px 12px #101010;
+    }
+    form {
+        font-family: 'NES';
+        font-size: 14px;
+        width: 100%;
+    }
+    input {
+        font-family: 'NES';
+        font-size: 15px;
+        height:40px;
+        width: 100%;
+        margin-bottom: 5px;
+    }
