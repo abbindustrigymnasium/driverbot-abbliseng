@@ -44,7 +44,7 @@
         margin-bottom: 30px;
         margin-top: 60px;
         height: 310px;
-        width: 790px
+        width: 790px;
     }
 
     .left-sector {
@@ -332,4 +332,55 @@
         height:40px;
         width: 100%;
         margin-bottom: 5px;
+    }
+    .progress{
+        width: 300px;
+        height: 20px;
+        background-color: #EE1515;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        margin-top: -175px;
+        margin-left: -150px;
+        z-index: 10;
+        border-radius: 10px;
+    }
+    .connected{
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        margin-top: -180px;
+        margin-left: -380px;
+        z-index: 10;
+        width: 25px;
+        height: 25px;
+        border-radius: 12.5px;
+        box-shadow: 2px 2px 12px #008000;
+        background-color: #228B22;
+    }
+    .disconnected{
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        margin-top: -180px;
+        margin-left: -380px;
+        z-index: 10;
+        width: 25px;
+        height: 25px;
+        border-radius: 12.5px;
+        box-shadow: 2px 2px 12px #EE1515;
+        background-color: #EE1515;
+    }
+    .connecting{
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        margin-top: -180px;
+        margin-left: -380px;
+        z-index: 10;
+        width: 25px;
+        height: 25px;
+        border-radius: 12.5px;
+        box-shadow: 2px 2px 12px #ffd500;
+        background-color: #ffbf00;
     }
