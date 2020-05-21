@@ -12,7 +12,11 @@
             //document.getElementById("messages").innerHTML += '<span>ERROR: Connection to: ' + host + ' on port: ' +
             port + ' failed.</span><br/>'
             console.log('Misslyckades med anslutning till: '+document.getElementById('fname').value+'/')
-            document.getElementById('light').setAttribute('class', 'disconnected')
+            
+            document.getElementById('lightConnected').setAttribute('class', 'connected1')
+            document.getElementById('lightConnecting').setAttribute('class', 'connecting1')
+            document.getElementById('lightDisconnected').setAttribute('class', 'disconnected')
+
         }
         let topic = "abbexpectmore@gmail.com/";
 
@@ -32,7 +36,11 @@
             message = new Paho.MQTT.Message("Connected!");
             message.destinationName = topic;
             client.send(message);
-            document.getElementById('light').setAttribute('class', 'connected')
+            
+            document.getElementById('lightConnected').setAttribute('class', 'connected')
+            document.getElementById('lightConnecting').setAttribute('class', 'connecting1')
+            document.getElementById('lightDisconnected').setAttribute('class', 'disconnected1')
+
             // topic = document.getElementById("fname").value + '/'
 
             // client.subscribe(topic2);
@@ -92,7 +100,9 @@
             client.onConnectionLost = onConnectionLost;
             client.onMessageArrived = onMessageArrived;
 
-            document.getElementById('light').setAttribute('class', 'connecting')
+            document.getElementById('lightConnected').setAttribute('class', 'connected1')
+            document.getElementById('lightConnecting').setAttribute('class', 'connecting')
+            document.getElementById('lightDisconnected').setAttribute('class', 'disconnected1')
 
             client.connect({
                 userName: document.getElementById("fname").value,
@@ -186,7 +196,9 @@
 
 <body class="background">
     <!-- <div class="progress"></div> -->
-    <div id="light" class="disconnected"></div>
+    <div id="lightConnected" class="connected1"></div>
+    <div id="lightConnecting" class="connecting1"></div>
+    <div id="lightDisconnected" class="disconnected"></div>
     <div class="outline center">
 
         <div class="inner-square">

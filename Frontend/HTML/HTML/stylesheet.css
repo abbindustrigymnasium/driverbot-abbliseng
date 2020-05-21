@@ -355,15 +355,15 @@
         width: 25px;
         height: 25px;
         border-radius: 12.5px;
-        box-shadow: 2px 2px 12px #008000;
-        background-color: #228B22;
+        box-shadow: 2px 2px 12px #32CD32;
+        background-color: #32CD32;
     }
     .disconnected{
         position: fixed;
         top: 50%;
         left: 50%;
         margin-top: -180px;
-        margin-left: -380px;
+        margin-left: -290px;
         z-index: 10;
         width: 25px;
         height: 25px;
@@ -376,11 +376,50 @@
         top: 50%;
         left: 50%;
         margin-top: -180px;
-        margin-left: -380px;
+        margin-left: -335px;
         z-index: 10;
         width: 25px;
         height: 25px;
         border-radius: 12.5px;
         box-shadow: 2px 2px 12px #ffd500;
         background-color: #ffbf00;
+    }
+    .connected1{
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        margin-top: -180px;
+        margin-left: -380px;
+        z-index: 10;
+        width: 25px;
+        height: 25px;
+        border-radius: 12.5px;
+        /* box-shadow: 2px 2px 12px #32CD32; */
+        background-color: rgb(32, 129, 32);
+    }
+    .connecting1{
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        margin-top: -180px;
+        margin-left: -335px;
+        z-index: 10;
+        width: 25px;
+        height: 25px;
+        border-radius: 12.5px;
+        /* box-shadow: 2px 2px 12px #ffd500; */
+        background-color: #a37a00;
+    }
+    .disconnected1{
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        margin-top: -180px;
+        margin-left: -290px;
+        z-index: 10;
+        width: 25px;
+        height: 25px;
+        border-radius: 12.5px;
+        /* box-shadow: 2px 2px 12px #EE1515; */
+        background-color: rgb(116, 12, 12);
     }
