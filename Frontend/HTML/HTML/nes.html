@@ -142,17 +142,23 @@
     let output = 0;
     let placeholder = 0;
     function speed(value) {
-        if (output == 0) {
-            output += 700
-        }
         output += value
-        if (output < 0) {
-            POWER = "0"
-        } else if (output > 0) {
-            POWER = "1"
+        if (output == 340){
+            output -= value
+        } else if (output == -340){
+            output -= value
         }
-        placeholder = (output ^ (output >> 31)) - (output >> 31)
-        // console.log(this.POWER, placeholder)
+
+        if (output < 0){
+            this.POWER = 0
+            placeholder = output * -1
+        } else {
+            this.POWER = 1
+            placeholder = output
+        }
+        placeholder += 700
+
+        console.log(this.POWER, placeholder)
         drive(this.POWER, placeholder, turning)
     }
     let turning = 90
