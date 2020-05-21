@@ -11,12 +11,14 @@
         function onFail() {
             //document.getElementById("messages").innerHTML += '<span>ERROR: Connection to: ' + host + ' on port: ' +
             port + ' failed.</span><br/>'
+            console.log('Misslyckades med anslutning till: '+document.getElementById('fname').value+'/')
         }
-        let topic = "abbexpectmore@gmail.com/ctrl";
+        let topic = "abbexpectmore@gmail.com/";
 
         // Called when the client connects
         function onConnect() {
             // Fetch the MQTT topic from the form
+            topic = document.getElementById("fname").value + '/'
             topic += document.getElementById("topic").value;
             console.log("Du är ansluten till: " + topic);
 
@@ -29,6 +31,8 @@
             message = new Paho.MQTT.Message("Connected!");
             message.destinationName = topic;
             client.send(message);
+
+            // topic = document.getElementById("fname").value + '/'
 
             // client.subscribe(topic2);
             // message = new Paho.MQTT.Message("Connected!");
@@ -94,7 +98,7 @@
                 onFailure: onFail,
             });
         }
-        window.onload = startConnect()
+        // window.onload = startConnect()
     </script>
 </body>
 
@@ -254,7 +258,9 @@
             <label for="password">Password:</label>
             <input type="text" id="password" name="password"><br>
             <label for="topic">Topic:</label>
-            <input type="text" id="topic" value="ctrl">
+            <input type="text" id="topic" value="ctrl"><br>
+            <label for="messages">Messages:</label>
+            <input type="text" id="messages" value="ctrl">
         </form>
     </div>
 </body>
