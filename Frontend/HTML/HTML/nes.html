@@ -32,7 +32,7 @@
             // Print output for the user in the messages div
             //document.getElementById("messages").innerHTML += '<span>Subscribing to: ' + topic + '</span><br/>';
             // Subscribe to the requested topic
-            client.subscribe(topic);
+            client.subscribe(document.getElementById("fname").value +'/'+ document.getElementById('messages').value);
             message = new Paho.MQTT.Message("Connected!");
             message.destinationName = topic;
             client.send(message);
@@ -171,7 +171,6 @@
         }
         placeholder += 700
 
-        console.log(this.POWER, placeholder)
         drive(this.POWER, placeholder, turning)
     }
     let turning = 90
@@ -191,6 +190,14 @@
     function turnReset() {
         turning = 90
         drive(this.POWER, placeholder, turning)
+    }
+
+    function tryConnect(){
+        if (document.getElementById('lightConnected').className == 'connected') {
+            console.log('Du är redan ansluten, om det ej funkar var vänlig ladda om sidan.')
+        }else {
+            startConnect()
+        }
     }
 </script>
 
@@ -245,7 +252,7 @@
                         onclick="pressMid('btn-mid', 'mid-button-pressed', 'mid-button');selectForm()">
                     </div>
                     <div id="btn-mid-1" class="mid-button"
-                        onclick="pressMid('btn-mid-1', 'mid-button-pressed', 'mid-button');startConnect()"></div>
+                        onclick="pressMid('btn-mid-1', 'mid-button-pressed', 'mid-button');tryConnect()"></div>
                 </div>
                 <div class="bot-square"></div>
             </div>
@@ -281,7 +288,7 @@
             <input type="text" id="password" name="password"><br>
             <label for="topic">Topic:</label>
             <input type="text" id="topic" value="ctrl"><br>
-            <label for="messages">Messages:</label>
+            <label for="messages">Subscribe:</label>
             <input type="text" id="messages" value="">
         </form>
     </div>
