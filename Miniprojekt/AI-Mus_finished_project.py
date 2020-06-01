@@ -15,7 +15,7 @@ debug = False  # Boolean
 food = []
 player = []
 paused = False
-sideLength = 10  # Change to increase/decrease map size.
+sideLength = 25  # Change to increase/decrease map size.
 
 
 
