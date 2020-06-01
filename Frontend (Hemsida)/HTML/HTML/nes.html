@@ -3,16 +3,18 @@
 <head>
     <meta charset="utf-8">
     <title>Driverbot</title>
-    <link rel="stylesheet" href="./stylesheet.css">
+    <link rel="stylesheet" href="./stylesheet.css"> <!-- Importing the stylesheet from seperate file -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript" import
         iro from "@jaames/iro" ;>
         </script>
     <script>
+        // Called when the connection fails
         function onFail() {
-            //document.getElementById("messages").innerHTML += '<span>ERROR: Connection to: ' + host + ' on port: ' +
+
             port + ' failed.</span><br/>'
-            console.log('Misslyckades med anslutning till: '+document.getElementById('fname').value+'/')
-            
+            console.log('Misslyckades med anslutning till: ' + document.getElementById('fname').value + '/')
+
+            // Changing the lights to indicate connection status
             document.getElementById('lightConnected').setAttribute('class', 'connected1')
             document.getElementById('lightConnecting').setAttribute('class', 'connecting1')
             document.getElementById('lightDisconnected').setAttribute('class', 'disconnected')
@@ -20,62 +22,50 @@
         }
         let topic = "abbexpectmore@gmail.com/";
 
-        // Called when the client connects
+        // Connecting to the specified broker using entered credentials.
         function onConnect() {
-            // Fetch the MQTT topic from the form
+
             topic = document.getElementById("fname").value + '/'
             topic += document.getElementById("topic").value;
             console.log("Du är ansluten till: " + topic);
 
-            //topic2 += document.getElementById("topic").value;
-            //console.log("Du är ansluten till: " + topic2);
-            // Print output for the user in the messages div
-            //document.getElementById("messages").innerHTML += '<span>Subscribing to: ' + topic + '</span><br/>';
-            // Subscribe to the requested topic
-            client.subscribe(document.getElementById("fname").value +'/'+ document.getElementById('messages').value);
+            client.subscribe(document.getElementById("fname").value + '/' + document.getElementById('messages').value);
             message = new Paho.MQTT.Message("Connected!");
             message.destinationName = topic;
             client.send(message);
-            
+
+            // Changing the lights to indicate connection status
             document.getElementById('lightConnected').setAttribute('class', 'connected')
             document.getElementById('lightConnecting').setAttribute('class', 'connecting1')
             document.getElementById('lightDisconnected').setAttribute('class', 'disconnected1')
-
-            // topic = document.getElementById("fname").value + '/'
-
-            // client.subscribe(topic2);
-            // message = new Paho.MQTT.Message("Connected!");
-            // message.destinationName = topic2;
-            // client.send(message);
         }
+        // Function for sending the updated driving information to the microcontroller and thereby the car.
         function drive(power, speed, turn) {
             let mess4 = `(${power}:${speed}:${turn})`;
             message = new Paho.MQTT.Message(mess4);
-            message.destinationName = "abbexpectmore@gmail.com/ctrl";
+            message.destinationName = "abbexpectmore@gmail.com/ctrl"; // The topic to which the message is sent.
             client.send(message);
         }
 
-        // Called when the client loses its connection
         function onConnectionLost(responseObject) {
-            //document.getElementById("messages").innerHTML += '<span>ERROR: Connection lost</span><br/>';
             if (responseObject.errorCode !== 0) {
                 document.getElementById("messages").innerHTML += '<span>ERROR: ' + +responseObject.errorMessage +
                     '</span><br/>';
             }
         }
 
-        // Called when a message arrives
+        // Called when a message arrives and then prints the recived message to the console.
         function onMessageArrived(message) {
             console.log("onMessageArrived: " + message.payloadString);
             document.getElementById("messages").innerHTML += '<span>Topic: ' + message.destinationName + '  | ' +
                 message.payloadString + '</span><br/>';
         }
 
-        // Called when the disconnection button is pressed
+        // Disconnect from mqtt
         function startDisconnect() {
             client.disconnect();
             window.location.reload();
-            // document.getElementById("messages").innerHTML += '<span>Disconnected</span><br/>';
+
         }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@jaames/iro"></script>
@@ -83,27 +73,27 @@
 
 <body>
     <script>
+        // Function to start connecting to the mqtt broker.
         function startConnect() {
-            // Generate a random client ID
+
             clientID = "clientID_" + parseInt(Math.random() * 100);
 
-            // Fetch the hostname/IP address and port number from the form
-            host = "maqiatto.com";
+            host = "maqiatto.com"; // The broker
             port = 8883;
 
             '</span><br/>';
 
             '</span><br/>';
-            // Initialize new Paho client connection
+
             client = new Paho.MQTT.Client(host, Number(port), clientID);
-            // Set callback handlers
+
             client.onConnectionLost = onConnectionLost;
             client.onMessageArrived = onMessageArrived;
-
+            //Changing the lights to indicate connection status
             document.getElementById('lightConnected').setAttribute('class', 'connected1')
             document.getElementById('lightConnecting').setAttribute('class', 'connecting')
             document.getElementById('lightDisconnected').setAttribute('class', 'disconnected1')
-
+            // Getting connection information from the form
             client.connect({
                 userName: document.getElementById("fname").value,
                 password: document.getElementById("password").value,
@@ -111,28 +101,31 @@
                 onFailure: onFail,
             });
         }
-        // window.onload = startConnect()
+
     </script>
 </body>
 
 <script>
     let holding = false
-    //Button graphics
+    //Change style class for visual button press effect.
     function pressMid(btn, style1, style2) {
         document.getElementById(btn).setAttribute("class", style1)
         setTimeout(function () {
             document.getElementById(btn).setAttribute("class", style2)
         }, 200)
     }
+    //Register when mouse is released
     function mouseUp(btn, style) {
         document.getElementById(btn).setAttribute("class", style)
         holding = false
     }
+    //Register when mouse is pushed down
     function mouseDown(btn, style) {
         document.getElementById(btn).setAttribute("class", style)
         holding = true
         hold(btn)
     }
+    //While in the state of pushed down and not yet released (held in)
     function hold(btn) {
         if (holding) {
             if (btn == 'up') {
@@ -151,18 +144,20 @@
 
         }
     }
+    //Functions for controlling the car and determening forwards and backwards.
     var POWER = "0";
     let output = 0;
-    let placeholder = 0;
+    let placeholder = 0; //Throwaway variable for remebering changes
+    // Function for sending and updating the speed value on input
     function speed(value) {
         output += value
-        if (output == 340){
+        if (output == 340) {
             output -= value
-        } else if (output == -340){
+        } else if (output == -340) {
             output -= value
         }
 
-        if (output < 0){
+        if (output < 0) {
             this.POWER = 0
             placeholder = output * -1
         } else {
@@ -173,7 +168,8 @@
 
         drive(this.POWER, placeholder, turning)
     }
-    let turning = 90
+    // Function for updating and sending turn value on input
+    let turning = 90 // Standard (straight forward)
     function turn(value) {
         if (turning + value < 30 || turning + value > 150) {
             null
@@ -182,34 +178,36 @@
         }
         drive(this.POWER, placeholder, turning)
     }
+    // Function to quickly reset the speed thereby stopping the car.
     function speedReset() {
         this.POWER = 0
         placeholder = 0
         drive(this.POWER, placeholder, turning)
     }
+    // Quickly reset the steering/turning thereby making the car drive straight.
     function turnReset() {
-        turning = 90
+        turning = 90 // Standard (staright forward)
         drive(this.POWER, placeholder, turning)
     }
-
-    function tryConnect(){
+    // Check if already connected otherwise try connecting to mqtt broker
+    function tryConnect() {
         if (document.getElementById('lightConnected').className == 'connected') {
             console.log('Du är redan ansluten, om det ej funkar var vänlig ladda om sidan.')
-        }else {
+        } else {
             startConnect()
         }
     }
 </script>
 
 <body class="background">
-    <!-- <div class="progress"></div> -->
+    <!-- Divs for creating the three light that show connection status on the website -->
     <div id="lightConnected" class="connected1"></div>
     <div id="lightConnecting" class="connecting1"></div>
     <div id="lightDisconnected" class="disconnected"></div>
+    <!-- Divs for generating the beautiful NES gamepad you see on the site, please excuse the mess bellow -->
     <div class="outline center">
-
         <div class="inner-square">
-
+            <!-- The left sector (4-way) -->
             <div class="left-sector">
                 <div class="a">
                     <div id="left" class="left" onmousedown="mouseDown('left', 'left shadow-left')"
@@ -235,7 +233,7 @@
                     </div>
                 </div>
             </div>
-
+            <!-- The center section of the controller (Start, Select)-->
             <div class="center-sector">
                 <div class="mid-square"
                     style="margin-top: 0px; border-top-right-radius: 0px; border-top-left-radius: 0px;">
@@ -256,7 +254,7 @@
                 </div>
                 <div class="bot-square"></div>
             </div>
-
+            <!-- The right sector of the controller (A, B) -->
             <div class="right-sector">
                 <div class="text-field">
                     <span style="font-family: Nintendo; font-size: 25px;">Spetsen</span>
@@ -277,9 +275,9 @@
                     <span style="margin-left: 50px;">A</span>
                 </div>
             </div>
-
         </div>
     </div>
+    <!-- Form for connecting to specified mqtt broker (mine is prefilled cause I don't feel like entering all the the time) -->
     <div id="select-form">
         <form id="connection-information-form">
             <label for="fname">Username:</label>
@@ -288,6 +286,7 @@
             <input type="text" id="password" name="password"><br>
             <label for="topic">Topic:</label>
             <input type="text" id="topic" value="ctrl"><br>
+            <!-- Subscribe to a topic for it's messages to show in console -->
             <label for="messages">Subscribe:</label>
             <input type="text" id="messages" value="">
         </form>
@@ -295,9 +294,10 @@
 </body>
 
 <script>
-    function selectForm(){
+    //Function for toggling the visibility of the form.
+    function selectForm() {
         var x = document.getElementById('select-form');
-        if (x.style.display === "none"){
+        if (x.style.display === "none") {
             x.style.display = "block";
         } else {
             x.style.display = "none"
