@@ -1,7 +1,6 @@
 # Main
 ## Driverbot
-### Planering/Uppgift
-Uppgiften var med hjälp av lego, en node MCU, tt-motor och en servo konstruera en bil. Denna bli skulle sedan via en [hemsida](http://driverbot.s3-website-us-east-1.amazonaws.com/).
+Uppgiften var med hjälp av lego, en node MCU, tt-motor och en servo m.m. konstruera en bil. Denna bli skulle sedan via en [hemsida](http://driverbot.s3-website-us-east-1.amazonaws.com/) styra bilen.
 ### Frontend (Hemsida)
 ### Backend (Mikrokontroller)
 ### Konstruktion
