@@ -2,8 +2,8 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Car Site Boi</title>
-    <link rel="stylesheet" href="./style.css">
+    <title>Driverbot</title>
+    <link rel="stylesheet" href="./stylesheet.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript" import
         iro from "@jaames/iro" ;>
         </script>
@@ -11,12 +11,19 @@
         function onFail() {
             //document.getElementById("messages").innerHTML += '<span>ERROR: Connection to: ' + host + ' on port: ' +
             port + ' failed.</span><br/>'
+            console.log('Misslyckades med anslutning till: '+document.getElementById('fname').value+'/')
+            
+            document.getElementById('lightConnected').setAttribute('class', 'connected1')
+            document.getElementById('lightConnecting').setAttribute('class', 'connecting1')
+            document.getElementById('lightDisconnected').setAttribute('class', 'disconnected')
+
         }
-        let topic = "abbexpectmore@gmail.com/ctrl";
+        let topic = "abbexpectmore@gmail.com/";
 
         // Called when the client connects
         function onConnect() {
             // Fetch the MQTT topic from the form
+            topic = document.getElementById("fname").value + '/'
             topic += document.getElementById("topic").value;
             console.log("Du är ansluten till: " + topic);
 
@@ -25,48 +32,21 @@
             // Print output for the user in the messages div
             //document.getElementById("messages").innerHTML += '<span>Subscribing to: ' + topic + '</span><br/>';
             // Subscribe to the requested topic
-            client.subscribe(topic);
+            client.subscribe(document.getElementById("fname").value +'/'+ document.getElementById('messages').value);
             message = new Paho.MQTT.Message("Connected!");
             message.destinationName = topic;
             client.send(message);
+            
+            document.getElementById('lightConnected').setAttribute('class', 'connected')
+            document.getElementById('lightConnecting').setAttribute('class', 'connecting1')
+            document.getElementById('lightDisconnected').setAttribute('class', 'disconnected1')
+
+            // topic = document.getElementById("fname").value + '/'
 
             // client.subscribe(topic2);
             // message = new Paho.MQTT.Message("Connected!");
             // message.destinationName = topic2;
             // client.send(message);
-        }
-
-        function onRGB() {
-            // Fetch the MQTT topic from the form
-            // Print output for the user in the messages div
-            let r = this.R;
-            let g = this.G;
-            let b = this.B;
-            let mess = `(${r},${g},${b})`;
-
-            // console.log(mess2);
-            //message = new Paho.MQTT.Message(mess2);
-
-            message = new Paho.MQTT.Message(mess);
-            message.destinationName = "abbexpectmore@gmail.com/ctrl";
-            client.send(message);
-        }
-        function onLamp() {
-            let power = this.POWER;
-            let strength = this.output;
-            let mess2 = `(${power}:${strength})`;
-
-            message = new Paho.MQTT.Message(mess2);
-            message.destinationName = "abbexpectmore@gmail.com/ctrl";
-            client.send(message);
-        }
-        function turn() {
-            let degree = this.output1;
-            let mess3 = `${degree}`;
-
-            message = new Paho.MQTT.Message(mess3);
-            message.destinationName = "abbexpectmore@gmail.com/light";
-            client.send(message);
         }
         function drive(power, speed, turn) {
             let mess4 = `(${power}:${speed}:${turn})`;
@@ -120,19 +100,114 @@
             client.onConnectionLost = onConnectionLost;
             client.onMessageArrived = onMessageArrived;
 
+            document.getElementById('lightConnected').setAttribute('class', 'connected1')
+            document.getElementById('lightConnecting').setAttribute('class', 'connecting')
+            document.getElementById('lightDisconnected').setAttribute('class', 'disconnected1')
+
             client.connect({
-                userName: "abbexpectmore@gmail.com",
-                password: "hej",
+                userName: document.getElementById("fname").value,
+                password: document.getElementById("password").value,
                 onSuccess: onConnect,
                 onFailure: onFail,
             });
         }
-        window.onload = startConnect()
+        // window.onload = startConnect()
     </script>
 </body>
 
+<script>
+    let holding = false
+    //Button graphics
+    function pressMid(btn, style1, style2) {
+        document.getElementById(btn).setAttribute("class", style1)
+        setTimeout(function () {
+            document.getElementById(btn).setAttribute("class", style2)
+        }, 200)
+    }
+    function mouseUp(btn, style) {
+        document.getElementById(btn).setAttribute("class", style)
+        holding = false
+    }
+    function mouseDown(btn, style) {
+        document.getElementById(btn).setAttribute("class", style)
+        holding = true
+        hold(btn)
+    }
+    function hold(btn) {
+        if (holding) {
+            if (btn == 'up') {
+                speed(10)
+                setTimeout(hold, 500, btn)
+            } else if (btn == 'down') {
+                speed(-10)
+                setTimeout(hold, 500, btn)
+            } else if (btn == 'right') {
+                turn(1)
+                setTimeout(hold, 1, btn)
+            } else if (btn == 'left') {
+                turn(-1)
+                setTimeout(hold, 1, btn)
+            }
+
+        }
+    }
+    var POWER = "0";
+    let output = 0;
+    let placeholder = 0;
+    function speed(value) {
+        output += value
+        if (output == 340){
+            output -= value
+        } else if (output == -340){
+            output -= value
+        }
+
+        if (output < 0){
+            this.POWER = 0
+            placeholder = output * -1
+        } else {
+            this.POWER = 1
+            placeholder = output
+        }
+        placeholder += 700
+
+        drive(this.POWER, placeholder, turning)
+    }
+    let turning = 90
+    function turn(value) {
+        if (turning + value < 30 || turning + value > 150) {
+            null
+        } else {
+            turning += value
+        }
+        drive(this.POWER, placeholder, turning)
+    }
+    function speedReset() {
+        this.POWER = 0
+        placeholder = 0
+        drive(this.POWER, placeholder, turning)
+    }
+    function turnReset() {
+        turning = 90
+        drive(this.POWER, placeholder, turning)
+    }
+
+    function tryConnect(){
+        if (document.getElementById('lightConnected').className == 'connected') {
+            console.log('Du är redan ansluten, om det ej funkar var vänlig ladda om sidan.')
+        }else {
+            startConnect()
+        }
+    }
+</script>
+
 <body class="background">
+    <!-- <div class="progress"></div> -->
+    <div id="lightConnected" class="connected1"></div>
+    <div id="lightConnecting" class="connecting1"></div>
+    <div id="lightDisconnected" class="disconnected"></div>
     <div class="outline center">
+
         <div class="inner-square">
 
             <div class="left-sector">
@@ -174,10 +249,10 @@
                 </div>
                 <div class="mid-buttons border">
                     <div id="btn-mid" class="mid-button"
-                        onclick="pressMid('btn-mid', 'mid-button-pressed', 'mid-button')">
+                        onclick="pressMid('btn-mid', 'mid-button-pressed', 'mid-button');selectForm()">
                     </div>
                     <div id="btn-mid-1" class="mid-button"
-                        onclick="pressMid('btn-mid-1', 'mid-button-pressed', 'mid-button');startConnect()"></div>
+                        onclick="pressMid('btn-mid-1', 'mid-button-pressed', 'mid-button');tryConnect()"></div>
                 </div>
                 <div class="bot-square"></div>
             </div>
@@ -189,10 +264,12 @@
                 </div>
                 <div class="buttons">
                     <div class="square">
-                        <div id="B" class="circle" onclick="pressMid('B', 'circle-pressed', 'circle');turnReset()"></div>
+                        <div id="B" class="circle" onclick="pressMid('B', 'circle-pressed', 'circle');turnReset()">
+                        </div>
                     </div>
                     <div class="square">
-                        <div id="A" class="circle" onclick="pressMid('A', 'circle-pressed', 'circle');speedReset()"></div>
+                        <div id="A" class="circle" onclick="pressMid('A', 'circle-pressed', 'circle');speedReset()">
+                        </div>
                     </div>
                 </div>
                 <div class="text-again">
@@ -203,408 +280,29 @@
 
         </div>
     </div>
-    <div>
+    <div id="select-form">
         <form id="connection-information-form">
-            <h id="topic" type="button" value="">
-                <script>
-                </script>
+            <label for="fname">Username:</label>
+            <input type="text" id="fname" name="fname" value="abbexpectmore@gmail.com"><br>
+            <label for="password">Password:</label>
+            <input type="text" id="password" name="password"><br>
+            <label for="topic">Topic:</label>
+            <input type="text" id="topic" value="ctrl"><br>
+            <label for="messages">Subscribe:</label>
+            <input type="text" id="messages" value="">
         </form>
     </div>
 </body>
 
-</html>
-
 <script>
-    let holding = false
-    //Button graphics
-    function pressMid(btn, style1, style2) {
-        document.getElementById(btn).setAttribute("class", style1)
-        setTimeout(function () {
-            document.getElementById(btn).setAttribute("class", style2)
-        }, 200)
-    }
-    function mouseUp(btn, style) {
-        document.getElementById(btn).setAttribute("class", style)
-        holding = false
-    }
-    function mouseDown(btn, style) {
-        document.getElementById(btn).setAttribute("class", style)
-        holding = true
-        hold(btn)
-    }
-    function hold(btn) {
-        if (holding) {
-            if (btn == 'up'){
-                speed(10)
-                setTimeout(hold, 500, btn)
-            }else if(btn == 'down'){
-                speed(-10)
-                setTimeout(hold, 500, btn)
-            }else if(btn == 'right'){
-                turn(1)
-                setTimeout(hold, 1, btn)
-            }else if(btn == 'left'){
-                turn(-1)
-                setTimeout(hold, 1, btn)
-            }
-            
+    function selectForm(){
+        var x = document.getElementById('select-form');
+        if (x.style.display === "none"){
+            x.style.display = "block";
+        } else {
+            x.style.display = "none"
         }
-    }
-    var POWER = "0";
-    let output = 0;
-    let placeholder = 0;
-    function speed(value) {
-        if (output == 0){
-            output += 700
-        }
-        output += value
-        if (output < 0) {
-            POWER = "0"
-        } else if (output > 0) {
-            POWER = "1"
-        }
-        placeholder = (output ^ (output >> 31)) - (output >> 31)
-        console.log(this.POWER,placeholder)
-        drive(this.POWER, placeholder, turning)
-    }
-    let turning = 90
-    function turn(value) {
-        if (turning+value<30 || turning+value>150){
-            null
-        }else{
-            turning += value
-        }
-        drive(this.POWER, placeholder, turning)
-    }
-    function speedReset(){
-        this.POWER = 0
-        placeholder = 0
-        drive(this.POWER, placeholder, turning)
-    }
-    function turnReset(){
-        turning = 90
-        drive(this.POWER, placeholder, turning)
     }
 </script>
 
-<style>
-    @font-face {
-        font-family: NES;
-        src: url("./Fonts/NES.ttf");
-    }
-
-    @font-face {
-        font-family: Nintendo;
-        src: url("./Fonts/Nintendo.ttf");
-    }
-
-    .background {
-        background-color: darkslategray;
-    }
-
-    .outline {
-        border-radius: 10px;
-        background-color: #D0D0D0;
-        width: 850px;
-        height: 400px;
-        box-shadow: #181818 10px 10px;
-        /* Shadow gradiant */
-        /* -webkit-box-shadow: 29px 21px 68px 0px rgba(0,0,0,0.75); */
-    }
-
-    .center {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        margin-top: -200px;
-        margin-left: -430px;
-    }
-
-    .inner-square {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-template-rows: auto;
-        border-radius: 5px;
-        background-color: #282828;
-        margin-left: 30px;
-        margin-right: 30px;
-        margin-bottom: 30px;
-        margin-top: 60px;
-        height: 310;
-    }
-
-    .left-sector {
-        position: relative;
-    }
-
-    .center-sector {
-        position: relative;
-    }
-
-    .right-sector {
-        position: relative;
-    }
-
-    .mid-square {
-        position: relative;
-        background-color: #BDAEAD;
-        width: 100%;
-        height: 45px;
-        margin-top: 15px;
-        border-radius: 10px;
-    }
-
-    .bot-square {
-        position: absolute;
-        bottom: 0px;
-        background-color: #BDAEAD;
-        height: 20px;
-        width: 100%;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-    }
-
-    .mid-buttons {
-        background-color: #D0D0D0;
-        border-radius: 10px;
-        margin-top: 10px;
-        width: 100%;
-        height: 100px;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto;
-    }
-
-    .mid-button {
-        width: 90px;
-        height: 30px;
-        margin-top: 35px;
-        margin-left: 15px;
-        background-color: #181818;
-        border-radius: 15px;
-        box-shadow: #000000 5px 5px;
-    }
-
-    .mid-button-pressed {
-        width: 90px;
-        height: 30px;
-        margin-top: 45px;
-        margin-left: 25px;
-        background-color: #181818;
-        border-radius: 15px;
-    }
-
-    .mid-text-box {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto;
-        background-color: transparent;
-        text-align: center;
-        height: 100%;
-    }
-
-    span {
-        margin-top: 12.5px;
-        margin-left: 10px;
-        color: #EE1515;
-        font-family: 'NES';
-        font-size: 20px;
-    }
-
-    .text-field {
-        position: absolute;
-        margin-left: 50px;
-        margin-top: 75px;
-    }
-
-    .r-mark {
-        position: absolute;
-        margin-top: -6px;
-        margin-left: 0px;
-        font-family: sans-serif;
-        font-size: 16;
-    }
-
-    .buttons {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto;
-    }
-
-    .square {
-        margin-top: 175px;
-        margin-left: 20px;
-        width: 100px;
-        height: 100px;
-        background-color: #D0D0D0;
-        border-radius: 10px;
-    }
-
-    .circle {
-        width: 80px;
-        height: 80px;
-        background-color: #EE1515;
-        margin-top: 5px;
-        margin-left: 5px;
-        border-radius: 40px;
-        box-shadow: #800000 5px 5px;
-    }
-
-    .circle-pressed {
-        width: 80px;
-        height: 80px;
-        background-color: #EE1515;
-        margin-top: 10px;
-        margin-left: 10px;
-        border-radius: 40px;
-    }
-
-    .text-again {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto;
-        margin-top: -10px;
-        margin-left: 80px;
-        font-size: 15px;
-    }
-
-    .a {
-        background-color: #D0D0D0;
-        margin-left: 30px;
-        margin-top: 120px;
-        width: 210px;
-        height: 70px;
-        border-radius: 5px;
-    }
-
-    .b {
-        background-color: #D0D0D0;
-        margin-left: 100px;
-        margin-top: -140px;
-        width: 70px;
-        height: 210px;
-        border-radius: 5px;
-    }
-
-    .left {
-        position: absolute;
-        margin-top: 5px;
-        margin-left: 5px;
-        width: 60px;
-        height: 60px;
-        background-color: #191919;
-        border-right: #151515 10px solid;
-        border-top-left-radius: 5px;
-        border-bottom-left-radius: 5px;
-    }
-
-    .right {
-        position: absolute;
-        width: 60px;
-        height: 60px;
-        background-color: #191919;
-        margin-left: 135px;
-        margin-top: 5px;
-        border-left: #151515 10px solid;
-        border-top-right-radius: 5px;
-        border-bottom-right-radius: 5px;
-    }
-
-    .middle {
-        position: absolute;
-        width: 60px;
-        height: 60px;
-        background-color: #191919;
-        margin-top: 75px;
-        margin-left: 5px;
-    }
-
-    .middle1 {
-        width: 50px;
-        height: 50px;
-        margin-top: 5px;
-        margin-left: 5px;
-        background-color: #151515;
-        border-radius: 25px;
-    }
-
-    .up {
-        position: absolute;
-        width: 60px;
-        height: 60px;
-        background-color: #191919;
-        margin-top: 5px;
-        margin-left: 5px;
-        border-bottom: 10px #151515 solid;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
-    }
-
-    .down {
-        position: absolute;
-        width: 60px;
-        height: 60px;
-        background-color: #191919;
-        margin-top: 135px;
-        margin-left: 5px;
-        border-top: 10px #151515 solid;
-        border-bottom-left-radius: 5px;
-        border-bottom-right-radius: 5px;
-    }
-
-    .triangle-up {
-        width: 0;
-        height: 0;
-        border-left: 20px solid transparent;
-        border-right: 20px solid transparent;
-        border-bottom: 40px solid #151515;
-        margin-left: 9px;
-        margin-top: 9px;
-    }
-
-    .triangle-down {
-        width: 0;
-        height: 0;
-        border-left: 20px solid transparent;
-        border-right: 20px solid transparent;
-        border-top: 40px solid #151515;
-        margin-left: 9px;
-        margin-top: 9px;
-    }
-
-    .triangle-left {
-        width: 0;
-        height: 0;
-        border-top: 20px solid transparent;
-        border-right: 40px solid #151515;
-        border-bottom: 20px solid transparent;
-        margin-top: 9px;
-        margin-left: 9px;
-    }
-
-    .triangle-right {
-        width: 0;
-        height: 0;
-        border-top: 20px solid transparent;
-        border-left: 40px solid #151515;
-        border-bottom: 20px solid transparent;
-        margin-top: 9px;
-        margin-left: 9px;
-    }
-
-    .shadow-up {
-        box-shadow: inset #101010 5px 5px 12px;
-    }
-
-    .shadow-down {
-        box-shadow: inset -8px -6px 12px #101010;
-    }
-
-    .shadow-left {
-        box-shadow: inset 8px -6px 12px #101010;
-    }
-
-    .shadow-right {
-        box-shadow: inset -8px 6px 12px #101010;
-    }
-</style>
+</html>
