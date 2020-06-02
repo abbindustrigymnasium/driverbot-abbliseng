@@ -14,7 +14,7 @@ Planen är att konstuera en bil utav lego och teknik komponenter. Skapa en hemsi
 På hemsidan ska man kunna välja en topic att subscriba till också för lättare felsökning. Den ska inte ha en joystick som kontroll trots det kan vara mest användarvänligt då jag tycker det är tråkigt :((
 ## Frontend (Hemsida)
 Hemsidan är en återskapning av den klassiska NES kontrollen av nintendo (lägg märke till att det står spetsen där det tidigare stått nintendo). 
-![Image of site]()
+![Image of site](https://github.com/abbindustrigymnasium/driverbot-abbliseng/blob/master/Miniprojekt/pictures/driverbot_hemsida.PNG)
 Kontrollen består egentligen av tre delar; Vänstra delen, Mitten delen och den Högra delen.  
 ### Vänstra delen
 Denna del består av de klassiska fyra pilarna; upp, ned, höger och vänster. Upp och ned ändrar bilens hastighet i motsvarande riktning och höger och vänsterpilarna dess styrning. Hastigheten ändras i steg av 10 men knapparna kan även hållas in för gradvis förändring.
