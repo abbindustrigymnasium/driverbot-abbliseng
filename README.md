@@ -11,6 +11,8 @@ Planen är att konstuera en bil utav lego och teknik komponenter. Skapa en hemsi
 * * Beräkna differensen i hjulhastighet mellan de två motorerna utifrån angiven svängradie.
 * * Utifrån angiven riktning utför hastighetsförändringen och riktningsförändringen (kalla egen funktion som har hand om slutlig förändring).  
 
+Tanken är att nu när jag gör en hemsida även göra den åtkomlig från mobilen. Tanken är att använda AWS S3 Bucket för detta.
+
 På hemsidan ska man kunna välja en topic att subscriba till också för lättare felsökning. Den ska inte ha en joystick som kontroll trots det kan vara mest användarvänligt då jag tycker det är tråkigt :((
 ## Frontend (Hemsida)
 Hemsidan är en återskapning av den klassiska NES kontrollen av nintendo (lägg märke till att det står spetsen där det tidigare stått nintendo). Hemsidan är förövrigt skapad med HTML, CSS och JS. Detta beslut var då jag från början tänka skapa en app med det gick ej så bra och HTML har sedan början av 1an varit något jag vill förstå och kunna använda bättre.  
