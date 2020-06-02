@@ -1,7 +1,7 @@
 # Driverbot
 Uppgiften var med hjälp av lego, en node MCU, tt-motor och en servo m.m. konstruera en bil. Denna bli skulle sedan via en [hemsida](http://driverbot.s3-website-us-east-1.amazonaws.com/) styra bilen.  
 ### Planering  
-Planen är att konstuera en bil utav lego och teknik komponenter. Skapa en hemsida av något slag och sedan kunna styra bilen via sagd hemsida.
+Planen är att konstuera en bil utav lego och teknik komponenter. Skapa en hemsida av något slag och sedan kunna styra bilen via sagd hemsida. *Tanken var från början att skapa en app men detta gick inte då jag ej hade tillräckligt med behörigheter att skapa ett nytt projekt så det blev en hemsida, därav finns ingen superbra utvecklad planering då detta var ett sent beslut i projektet.*
 * Anslut till MQTT-broker via angiven information (namn, topic, lösen m.m.)
 * * Denna ska ej ansluta vid inladdning utav sida då detta motarbetar möjligheten att använda form för att byta vilken bil som styrs.
 * Skicka paket från hemisida vid varje knapptryck (t.ex. 1:710:90)
