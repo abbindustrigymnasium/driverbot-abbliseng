@@ -15,9 +15,14 @@ På hemsidan ska man kunna välja en topic att subscriba till också för lätta
 ## Frontend (Hemsida)
 Hemsidan är en återskapning av den klassiska NES kontrollen av nintendo (lägg märke till att det står spetsen där det tidigare stått nintendo). 
 ![Image of site](https://github.com/abbindustrigymnasium/driverbot-abbliseng/blob/master/Miniprojekt/pictures/driverbot_hemsida.PNG)
+http://driverbot.s3-website-us-east-1.amazonaws.com/  
 Kontrollen består egentligen av tre delar; Vänstra delen, Mitten delen och den Högra delen.  
 ### Vänstra delen
 Denna del består av de klassiska fyra pilarna; upp, ned, höger och vänster. Upp och ned ändrar bilens hastighet i motsvarande riktning och höger och vänsterpilarna dess styrning. Hastigheten ändras i steg av 10 men knapparna kan även hållas in för gradvis förändring.
+### Mitten delen
+Den mittersta delen består av knapparna SELECT och START. Om man trycker på SELECT öppnas en form där man kan skriva in den information som krävs för att ansluta till sin MQTT-broker. START försöker skapa en anslutning med den angiva informationen.
+### Högra delen
+Den högra delen består av knapparna A och B men även den klassika trademark texten. (Fun fact, den font som används hade inget "®" så den är sitt egna objekt som sen placerats intill den andra. A knappen återställer bilens hastighet (stannar) och B återställer dess styrning (rakt fram).
 ## Backend (Mikrokontroller)
 ## Konstruktion
 Konstruktionen av bilen har genomgått en rad generationer. Blev aldrig riktnigt nöjd men konstruktionen mestadels på grund av brist på material men känner att jag lyckats skapa det bästa möjliga med det jag hade tillgängligt. En förändring jag gjort ifrån första planering är att jag inte har någon form av differential mellan bakhjulen. För att undvika att den sladdar använder jag istället två TT motorer och uti från beräkningar av svängradie ändrar jag hastighets differensen mellan hjulen i svängarna.
