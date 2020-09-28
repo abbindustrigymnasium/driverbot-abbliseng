@@ -19,10 +19,10 @@ bool neg = false;
 void onConnectionEstablished();
 
 EspMQTTClient client(
-/* "ABB_Indgym_Guest",           // Wifi ssid
-  "Welcome2abb",           // Wifi password */
-  "#Telia-53E8F8",
-  "JAH@=-wauM231rnt",
+  "ABB_Indgym_Guest",           // Wifi ssid
+  "Welcome2abb",           // Wifi password
+/*  "#Telia-53E8F8",
+  "JAH@=-wauM231rnt", */
   "maqiatto.com",  // MQTT broker ip
   1883,             // MQTT broker port
   "abbexpectmore@gmail.com",            // MQTT username
