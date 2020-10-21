@@ -1,13 +1,12 @@
 <template>
-  <div>
-    <v-btn :disabled=connected @click="connect()">Connect</v-btn>
-    <v-btn @click="subscribe()">subscribe</v-btn>
-    <v-btn @click="send()">Send</v-btn>
+  <div class="row justify-center" style="margin-top: 10px;">
+    <v-btn :disabled=connected @click="connect()" style="margin-right: 10px">Connect</v-btn>
+    <v-btn :disabled=subscribed @click="subscribe()" style="margin-right: 10px">subscribe</v-btn>
+    <!-- <v-btn @click="send()">Send</v-btn> -->
   </div>
 </template>
 
 <script>
-// import mqtt from "mqtt"
 var mqtt = require("mqtt"),
   /* eslint-disable no-unused-vars */
   url = require("url")
@@ -23,7 +22,8 @@ export default {
     once: false,
     topic: 'abbexpectmore@gmail.com/ctrl',
     topic1: 'abbexpectmore@gmail.com/light',
-    last_payload: false
+    last_payload: false,
+    subscribed: false,
   }),
   methods: {
     connect() {
@@ -47,6 +47,7 @@ export default {
           console.log("no")
           this.connected = false
         })
+      this.connected = true
     },
     send() {
       let msg = String(this.message)
@@ -62,6 +63,7 @@ export default {
         var test = String.fromCharCode.apply(null, message)
         console.log(test)
       })
+      this.subscribed = true
     },
   },
   mounted: function(){
@@ -85,6 +87,7 @@ export default {
           console.log("no")
           this.connected = false
         })
+      this.connected = true
     this.subscribe()
   }
 }
