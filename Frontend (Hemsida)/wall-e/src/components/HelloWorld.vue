@@ -21,7 +21,8 @@ export default {
     pass: "hej",
     message: true,
     once: false,
-    topic: 'abbexpectmore@gmail.com/light',
+    topic: 'abbexpectmore@gmail.com/ctrl',
+    topic1: 'abbexpectmore@gmail.com/light',
     last_payload: false
   }),
   methods: {
@@ -47,9 +48,6 @@ export default {
           this.connected = false
         })
     },
-    publish() {
-      // this.$mqtt.publish('VueMqtt/publish', "Hello World")
-    },
     send() {
       let msg = String(this.message)
       this.client.publish(this.topic, msg);
@@ -58,14 +56,36 @@ export default {
     },
     subscribe(){
       this.client.subscribe(this.topic, function(err, granted){
-        console.log(granted)
+        console.log("Hello")
+      })
+      this.client.on('message', function(topic, message){
+        var test = String.fromCharCode.apply(null, message)
+        console.log(test)
       })
     },
   },
-  // mqtt: {
-  //   'VueMqtt/publish' (data, topic) {
-  //     console.log(topic+': '+String.fromCharCode.apply(null, data));
-  //   }
-  // }
+  mounted: function(){
+    var mqtt_url = "maqiatto.com"
+    var url = "mqtt://"+mqtt_url;
+    var options = {
+        port: 8883,
+        clientId: "mqttjs_"+Math.random().toString(16).substr(2,8),
+        username: this.user,
+        password: this.pass
+      }
+      console.log("Connecting")
+      this.client = mqtt.connect(url, options)
+      console.log("Connected?")
+      this.client
+        .on("error", function(){
+          console.log("no")
+          this.connected = false
+        })
+        .on("close", function(){
+          console.log("no")
+          this.connected = false
+        })
+    this.subscribe()
+  }
 }
 </script>
