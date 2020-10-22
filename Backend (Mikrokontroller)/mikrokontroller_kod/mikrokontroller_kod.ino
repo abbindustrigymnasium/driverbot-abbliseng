@@ -8,12 +8,16 @@ Servo servo1;
 #define motorPinRightSpeed 5//D1
 #define motorPinLeftDir 2
 #define motorPinLeftSpeed 4
+#define GPIO 12
+#define PI 3.1415926535897932384626433832795
 
 int dir = 0;
 int spd = 0;
 
 int servo1_pin = 14;
 int turn = 90;
+int pulse = 0;
+
 bool neg = false;
 
 void onConnectionEstablished();
@@ -38,7 +42,7 @@ void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
   analogWrite(LED_BUILTIN, 0);
   Serial.begin(115200);
-  // Actually useful stuff xD
+  // Motors
   pinMode(motorPinRightDir, OUTPUT);
   pinMode(motorPinRightSpeed, OUTPUT);
   pinMode(motorPinLeftDir, OUTPUT);
@@ -46,6 +50,8 @@ void setup() {
   servo1.attach(servo1_pin);
   //Reset wheels before start
   servo1.write(turn);
+  pinMode(GPIO, INPUT);
+  attachInterrupt(digitalPinToInterrupt(GPIO), IntCallback, RISING);
 }
 
 void onConnectionEstablished(){
@@ -74,15 +80,34 @@ void onConnectionEstablished(){
 }
 // Function to simplify code and avoid repeditiveness.
 void DriveDirSpeed(int Dirpin, int Speedpin, int Direction, int Speed) {
-  if (Direction == 1)
-    Serial.println("Framåt");
-  else
-    Serial.println("Bakåt");
-  Serial.println("Hastighet: " + String(Speed));
   digitalWrite(Dirpin, Direction);
   analogWrite(Speedpin, Speed);
 }
 void loop() {
   //Loop through and catch imcoming messages
  client.loop();
+ millis_check(last_time);
+ if (timer == true) {
+  vel = pulse*(1/60)*deck* 1000 / dT;
+  last_time = millis();
+  err = bor - vel;
+  velo += kp * err;
+  pulse = 0;
+  String message = String(last_time)+", Error: "+String(err)+", Velo: "+String(velo);
+  client.publish("abbexpectmore@gmail.com/light", message);
+ }
+ // Add speed diff for turning
+ DriveDirSpeed(motorPinRightDir, motorPinRightSpeed, dir, velo);
+ DriveDirSpeed(motorPinLeftDir, motorPinLeftSpeed, dir, velo);
+}
+
+ICACHE_RAM_ATTR void IntCallback() {
+  pulse += 1;
+}
+bool millis_check(int last) {
+  if ((millis() - last)>=dT) {
+    timer = true;
+  } else {
+    timer = false;
+  }
 }
