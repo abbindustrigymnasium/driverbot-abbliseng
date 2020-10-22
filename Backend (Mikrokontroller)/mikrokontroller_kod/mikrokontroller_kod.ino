@@ -25,6 +25,7 @@ float ut = 0.016666666667;
 float kp = 2;
 float vel = 0;
 float deck = 3.5 * PI;
+float diff = 0;
 
 int servo1_pin = 14;
 int turn = 90;
@@ -101,7 +102,11 @@ void loop() {
  millis_check(last_time);
  if (timer == true) {
   //Might be wrongo
-  vel = pulse*ut*deck* 1000 / dT;
+  //pulse*ut => laps
+  //laps*deck = dist
+  //time 100ms = 0.1
+  //dist/time = vel
+  vel = (pulse*ut*deck)/(diff/1000);
   last_time = millis();
   err = bor - vel;
   velo += kp * err;
@@ -121,6 +126,7 @@ ICACHE_RAM_ATTR void IntCallback() {
 }
 bool millis_check(int last) {
   if ((millis() - last)>=dT) {
+    diff = millis() - last
     timer = true;
   } else {
     timer = false;
