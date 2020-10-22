@@ -4,7 +4,7 @@
 
 Servo servo1;
 
-#define defaulturl "abbexpectmore@gmail.com"
+#define defaulturl "lisa.engstrom@abbindustrigymnasium.se"
 #define motorPinRightDir  0//D3
 #define motorPinRightSpeed 5//D1
 #define motorPinLeftDir 2
@@ -45,8 +45,8 @@ EspMQTTClient client(
   "JAH@=-wauM231rnt", */
   "maqiatto.com",  // MQTT broker ip
   1883,             // MQTT broker port
-  "abbexpectmore@gmail.com",            // MQTT username
-  "hej",       // MQTT password
+  "lisa.engstrom@abbindustrigymnasium.se",            // MQTT username
+  "driverbot",       // MQTT password
   "Node",          // Client name
   onConnectionEstablished, // Connection established callback
   true,             // Enable web updater
@@ -71,7 +71,7 @@ void setup() {
 }
 
 void onConnectionEstablished(){
-  client.subscribe("abbexpectmore@gmail.com/ctrl", [] (const String &payload)
+  client.subscribe("lisa.engstrom@abbindustrigymnasium.se/ctrl", [] (const String &payload)
   {
     //Parse incoming message and seperate useful information
     kp = payload.substring(payload.indexOf('(')+1,payload.indexOf(':')).toInt();
@@ -87,7 +87,7 @@ void onConnectionEstablished(){
     servo1.write(turn); */
   });
   //Make sure your actually here (Good way to know if lost connection issue is present)
-  client.publish("abbexpectmore@gmail.com/light", "I'm online!");
+  client.publish("lisa.engstrom@abbindustrigymnasium.se/info", "I'm online!");
 }
 void DriveDirSpeed(int Dirpin, int Speedpin, int Direction, int Speed) {
   digitalWrite(Dirpin, Direction);
