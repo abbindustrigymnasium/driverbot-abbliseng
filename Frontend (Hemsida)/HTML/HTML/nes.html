@@ -20,7 +20,7 @@
             document.getElementById('lightDisconnected').setAttribute('class', 'disconnected')
 
         }
-        let topic = "abbexpectmore@gmail.com/";
+        let topic = "lisa.engstrom@abbindustrigymnasium.se/";
 
         // Connecting to the specified broker using entered credentials.
         function onConnect() {
@@ -43,7 +43,7 @@
         function drive(power, speed, turn) {
             let mess4 = `(${power}:${speed}:${turn})`;
             message = new Paho.MQTT.Message(mess4);
-            message.destinationName = "abbexpectmore@gmail.com/ctrl"; // The topic to which the message is sent.
+            message.destinationName = "lisa.engstrom@abbindustrigymnasium.se/ctrl"; // The topic to which the message is sent.
             client.send(message);
         }
 
@@ -281,7 +281,7 @@
     <div id="select-form">
         <form id="connection-information-form">
             <label for="fname">Username:</label>
-            <input type="text" id="fname" name="fname" value="abbexpectmore@gmail.com"><br>
+            <input type="text" id="fname" name="fname" value="lisa.engstrom@abbindustrigymnasium.se"><br>
             <label for="password">Password:</label>
             <input type="text" id="password" name="password"><br>
             <label for="topic">Topic:</label>
