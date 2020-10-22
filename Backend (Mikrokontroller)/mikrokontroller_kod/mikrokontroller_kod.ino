@@ -20,6 +20,7 @@ float err = 0;
 int velo = 0;
 int last_time = 0;
 int dT = 100;
+float ut = 0.016666666667;
 float kp = 2;
 float vel = 0;
 float deck = 3.5 * PI;
@@ -68,16 +69,16 @@ void onConnectionEstablished(){
   client.subscribe("abbexpectmore@gmail.com/ctrl", [] (const String &payload)
   {
     //Parse incoming message and seperate useful information
-    dir = payload.substring(payload.indexOf('(')+1,payload.indexOf(':')).toInt();
-    spd = payload.substring(payload.indexOf(':')+1,payload.lastIndexOf(':')).toInt();
+    kp = payload.substring(payload.indexOf('(')+1,payload.indexOf(':')).toInt();
+    bor = payload.substring(payload.indexOf(':')+1,payload.lastIndexOf(':')).toInt();
     turn = payload.substring(payload.lastIndexOf(':')+1).toInt();
     // If the turn is negative remeber this and make it an absolute value
     // This needs to be saved to later determine if right or left turn.
     //Calculate speed diff between inner and outer wheel
     float placeholder = -0.0082*turn+1;
     int spd1 = spd * placeholder;
-    DriveDirSpeed(motorPinRightDir, motorPinRightSpeed, dir, spd1);
-    DriveDirSpeed(motorPinLeftDir, motorPinLeftSpeed, dir, spd);
+    //DriveDirSpeed(motorPinRightDir, motorPinRightSpeed, dir, spd1);
+    //DriveDirSpeed(motorPinLeftDir, motorPinLeftSpeed, dir, spd);
     servo1.write(turn);
     
   });
@@ -98,13 +99,15 @@ void loop() {
  client.loop();
  millis_check(last_time);
  if (timer == true) {
-  vel = pulse*(1/60)*deck* 1000 / dT;
+  vel = pulse*ut*deck* 1000 / dT;
   last_time = millis();
   err = bor - vel;
   velo += kp * err;
-  String message = String(last_time)+", Error: "+String(err)+", Velo: "+String(velo)+", Vel: "+String(vel)+", Bor: "+String(bor)+", Pusles: "+String(pulse);
+  String message = String(last_time)+", Vel: "+String(vel)+", Pulses: "+String(pulse)+", Ut: "+String(ut)+", Deck: "+String(deck)+", dT: "+String(dT);
+  String mes = String(last_time)+", Error: "+String(err)+", Velo: "+String(velo)+", Vel: "+String(vel)+", Bor: "+String(bor)+", Pusles: "+String(pulse);
   pulse = 0;
   client.publish("abbexpectmore@gmail.com/light", message);
+  client.publish("abbexpectmore@gmail.com/light", mes);
  }
  // Add speed diff for turning
  DriveDirSpeed(motorPinRightDir, motorPinRightSpeed, dir, velo);

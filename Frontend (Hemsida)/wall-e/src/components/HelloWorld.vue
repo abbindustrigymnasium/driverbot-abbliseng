@@ -2,7 +2,7 @@
   <div class="row justify-center" style="margin-top: 10px;">
     <v-btn :disabled=connected @click="connect()" style="margin-right: 10px">Connect</v-btn>
     <v-btn :disabled=subscribed @click="subscribe()" style="margin-right: 10px">subscribe</v-btn>
-    <!-- <v-btn @click="send()">Send</v-btn> -->
+    <v-text class="col-12">{{this.display}}</v-text>
   </div>
 </template>
 
@@ -20,10 +20,11 @@ export default {
     pass: "hej",
     message: true,
     once: false,
-    topic: 'abbexpectmore@gmail.com/ctrl',
-    topic1: 'abbexpectmore@gmail.com/light',
+    topic: 'abbexpectmore@gmail.com/light',
+    topic1: 'abbexpectmore@gmail.com/ctrl',
     last_payload: false,
     subscribed: false,
+    display: 'Nada',
   }),
   methods: {
     connect() {
@@ -51,16 +52,17 @@ export default {
     },
     send() {
       let msg = String(this.message)
-      this.client.publish(this.topic, msg);
+      this.client.publish(this.topic1, msg);
       this.last_payload = msg
       this.message = !this.message
     },
     subscribe(){
+      var test = ''
       this.client.subscribe(this.topic, function(err, granted){
         console.log("Hello")
       })
       this.client.on('message', function(topic, message){
-        var test = String.fromCharCode.apply(null, message)
+        test = String.fromCharCode.apply(null, message)
         console.log(test)
       })
       this.subscribed = true
