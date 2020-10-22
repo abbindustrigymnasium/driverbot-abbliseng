@@ -15,17 +15,20 @@ Servo servo1;
 int dir = 0;
 int spd = 0;
 
+const float wheelCircumference = 3.5 * PI;
+const int interval = 100; //Interval
+const float exchange = 0.016666666667;
+
 bool timer = false;
-float bor = 0;
-float err = 0;
-int velo = 0;
 int last_time = 0;
-int dT = 100;
-float ut = 0.016666666667;
-float kp = 2;
-float vel = 0;
-float deck = 3.5 * PI;
-float diff = 0;
+
+float setpoint = 0; // Speed to reach
+float currentVelocity = 0;
+int velocityOut = 0;
+float err = 0;
+float dT = 0; // Delta time
+float kp = 2; // constant proportional
+float ki = 0; // constant integral
 
 int servo1_pin = 14;
 int turn = 90;
@@ -72,26 +75,20 @@ void onConnectionEstablished(){
   {
     //Parse incoming message and seperate useful information
     kp = payload.substring(payload.indexOf('(')+1,payload.indexOf(':')).toInt();
-    bor = payload.substring(payload.indexOf(':')+1,payload.lastIndexOf(':')).toInt();
+    setpoint = payload.substring(payload.indexOf(':')+1,payload.lastIndexOf(':')).toInt();
     turn = payload.substring(payload.lastIndexOf(':')+1).toInt();
-    // If the turn is negative remeber this and make it an absolute value
+    /* If the turn is negative remeber this and make it an absolute value
     // This needs to be saved to later determine if right or left turn.
     //Calculate speed diff between inner and outer wheel
     float placeholder = -0.0082*turn+1;
     int spd1 = spd * placeholder;
-    //DriveDirSpeed(motorPinRightDir, motorPinRightSpeed, dir, spd1);
-    //DriveDirSpeed(motorPinLeftDir, motorPinLeftSpeed, dir, spd);
-    servo1.write(turn);
-    
+    DriveDirSpeed(motorPinRightDir, motorPinRightSpeed, dir, spd1);
+    DriveDirSpeed(motorPinLeftDir, motorPinLeftSpeed, dir, spd);
+    servo1.write(turn); */
   });
   //Make sure your actually here (Good way to know if lost connection issue is present)
   client.publish("abbexpectmore@gmail.com/light", "I'm online!");
-
-  client.executeDelayed(5 * 1000, []() {
-    //client.publish("joakim.flink@abbindustrigymnasium.se/lampa", "This is a message sent 5 seconds later");
-  });
 }
-// Function to simplify code and avoid repeditiveness.
 void DriveDirSpeed(int Dirpin, int Speedpin, int Direction, int Speed) {
   digitalWrite(Dirpin, Direction);
   analogWrite(Speedpin, Speed);
@@ -101,32 +98,27 @@ void loop() {
  client.loop();
  millis_check(last_time);
  if (timer == true) {
-  //Might be wrongo
-  //pulse*ut => laps
-  //laps*deck = dist
-  //time 100ms = 0.1
-  //dist/time = vel
-  vel = (pulse*ut*deck)/(diff/1000);
+  currentVelocity = (pulse*exchange*wheelCircumference)/(dT/1000); // unit cm/s
   last_time = millis();
-  err = bor - vel;
-  velo += kp * err;
-  String message = String(last_time)+", Vel: "+String(vel)+", Pulses: "+String(pulse)+", Ut: "+String(ut)+", Deck: "+String(deck)+", dT: "+String(dT);
-  String mes = String(last_time)+", Error: "+String(err)+", Velo: "+String(velo)+", Vel: "+String(vel)+", Bor: "+String(bor)+", Pusles: "+String(pulse);
+  err = setpoint - v;
+  velocityOut += kp * err;
+  String message = String(last_time)+", Current Velocity: "+String(currentVelocity)+", Pulses: "+String(pulse)+", Exchange: "+String(exchange)+", Wheel Circumference: "+String(wheelCircumference)+", dT: "+String(dT);
+  String mes = String(last_time)+", Error: "+String(err)+", Velocity Out: "+String(velocityOut)+", Current Velocity: "+String(currentVelocity)+", Setpoint: "+String(setpoint)+", Pusles: "+String(pulse);
   pulse = 0;
   client.publish("abbexpectmore@gmail.com/light", message);
   client.publish("abbexpectmore@gmail.com/light", mes);
  }
  // Add speed diff for turning
- DriveDirSpeed(motorPinRightDir, motorPinRightSpeed, dir, velo);
- DriveDirSpeed(motorPinLeftDir, motorPinLeftSpeed, dir, velo);
+ DriveDirSpeed(motorPinRightDir, motorPinRightSpeed, dir, velocityOut);
+ DriveDirSpeed(motorPinLeftDir, motorPinLeftSpeed, dir, velocityOut);
 }
 
 ICACHE_RAM_ATTR void IntCallback() {
   pulse += 1;
 }
 bool millis_check(int last) {
-  if ((millis() - last)>=dT) {
-    diff = millis() - last
+  if ((millis() - last)>=interval) {
+    dT = millis() - last
     timer = true;
   } else {
     timer = false;
