@@ -14,6 +14,16 @@ Servo servo1;
 int dir = 0;
 int spd = 0;
 
+bool timer = false;
+float bor = 0;
+float err = 0;
+int velo = 0;
+int last_time = 0;
+int dT = 100;
+float kp = 2;
+float vel = 0;
+float deck = 3.5 * PI;
+
 int servo1_pin = 14;
 int turn = 90;
 int pulse = 0;
@@ -92,8 +102,8 @@ void loop() {
   last_time = millis();
   err = bor - vel;
   velo += kp * err;
+  String message = String(last_time)+", Error: "+String(err)+", Velo: "+String(velo)+", Vel: "+String(vel)+", Bor: "+String(bor)+", Pusles: "+String(pulse);
   pulse = 0;
-  String message = String(last_time)+", Error: "+String(err)+", Velo: "+String(velo);
   client.publish("abbexpectmore@gmail.com/light", message);
  }
  // Add speed diff for turning
