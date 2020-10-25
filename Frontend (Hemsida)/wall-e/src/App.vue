@@ -1,12 +1,12 @@
 <template>
   <v-app>
-    <v-app-bar
+    <!-- <v-app-bar
       app
       color="primary"
       dark
     >
     Turtles and Wall-E's
-    </v-app-bar>
+    </v-app-bar> -->
 
     <v-main>
       <HelloWorld/>
