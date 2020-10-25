@@ -1,4 +1,5 @@
 #include "EspMQTTClient.h"
+#include "FirebaseESP8266.h"
 #include "Servo.h"
 
 Servo servo1;
@@ -15,20 +16,24 @@ int dir = 0;
 int spd = 0;
 
 const float wheelCircumference = 3.5 * PI;
-const int interval = 100; //Interval
-const float exchange = 0.016666666667;
+const int interval = 1000; //Interval
+// const float exchange = 0.01666666666666666666666666666667; // 1/60
+const float exchange = 0.00833333333333333333333333333333;
 
 bool timer = false;
 int last_time = 0;
+int last_setpoint = 0;
 
 float setpoint = 0; // Speed to reach
 float currentVelocity = 0;
-int velocityOut = 0;
+float velocityOut = 0;
 float err = 0;
 float dT = 0; // Delta time
 float kp = 2; // constant proportional
 float ki = 0; // constant integral
-float kd = 0; //constant derive
+float kd = 1; //constant derive
+float last_error = 0;
+float sumError = 0;
 
 int servo1_pin = 14;
 int turn = 90;
@@ -36,22 +41,30 @@ int pulse = 0;
 
 bool neg = false;
 
-void onConnectionEstablished();
+// EspMQTTClient client(
+//   "#Telia-53E8F8",
+//   "JAH@=-wauM231rnt",
+//   "maqiatto.com",
+//   // 1883,
+//   "lisa.engstrom@abbindustrigymnasium.se"
+// )
 
+void onConnectionEstablished();
 EspMQTTClient client(
 /*  "ABB_Indgym_Guest",           // Wifi ssid
   "Welcome2abb",           // Wifi password*/
   "#Telia-53E8F8",
   "JAH@=-wauM231rnt", 
   "maqiatto.com",  // MQTT broker ip
-  1883,             // MQTT broker port
   "lisa.engstrom@abbindustrigymnasium.se",            // MQTT username
   "driverbot",       // MQTT password
   "Node",          // Client name
-  onConnectionEstablished, // Connection established callback
-  true,             // Enable web updater
-  true              // Enable debug messages
+  1883
 );
+
+ICACHE_RAM_ATTR void IntCallback() {
+  pulse += 1;
+}
 
 void setup() {
   // Useful for debugging
@@ -71,12 +84,20 @@ void setup() {
 }
 
 void onConnectionEstablished(){
-  client.subscribe("lisa.engstrom@abbindustrigymnasium.se/ctrl", [] (const String &payload)
+  client.subscribe("lisa.engstrom@abbindustrigymnasium.se/set", [] (const String &payload)
   {
     //Parse incoming message and seperate useful information
     setpoint = payload.substring(payload.indexOf('(')+1,payload.indexOf(':')).toInt();
-    kd = payload.substring(payload.indexOf(':')+1,payload.lastIndexOf(':')).toInt();
-    ki = payload.substring(payload.lastIndexOf(':')+1).toInt();
+    kd = payload.substring(payload.indexOf(':')+1,payload.lastIndexOf(':')).toFloat();
+    ki = payload.substring(payload.lastIndexOf(':')+1,payload.lastIndexOf(',')).toFloat();
+    kp = payload.substring(payload.lastIndexOf(',')+1).toFloat();
+    client.publish("lisa.engstrom@abbindustrigymnasium.se/info", (String(kd)+':'+String(ki)+':'+String(kp)));
+    // velocityOut = setpoint*10;
+    // if (setpoint<last_setpoint){
+    //   velocityOut = 5*setpoint;
+    //   last_setpoint = setpoint;
+    // }
+
     // kp = payload.substring(payload.indexOf('(')+1,payload.indexOf(':')).toInt();
     // setpoint = payload.substring(payload.indexOf(':')+1,payload.lastIndexOf(':')).toInt();
     // turn = payload.substring(payload.lastIndexOf(':')+1).toInt();
@@ -89,6 +110,11 @@ void onConnectionEstablished(){
     DriveDirSpeed(motorPinLeftDir, motorPinLeftSpeed, dir, spd);
     servo1.write(turn); */
   });
+  client.subscribe("lisa.engstrom@abbindustrigymnasium.se/turn", [] (const String &payload){
+    turn = payload.substring(payload.indexOf('(')+1,payload.indexOf(')')).toInt(); //140 - 30
+    turn = map(turn,-60,60,30,140);
+    servo1.write(turn);
+  });
   //Make sure your actually here (Good way to know if lost connection issue is present)
   client.publish("lisa.engstrom@abbindustrigymnasium.se/info", "I'm online!");
 }
@@ -96,34 +122,39 @@ void DriveDirSpeed(int Dirpin, int Speedpin, int Direction, int Speed) {
   digitalWrite(Dirpin, Direction);
   analogWrite(Speedpin, Speed);
 }
-void loop() {
- client.loop();
- millis_check(last_time);
- if (timer == true) {
-  currentVelocity = (pulse*exchange*wheelCircumference)/(dT/1000); // unit cm/s
-  last_time = millis();
-  err = setpoint - currentVelocity;
-  //kp * err => Proportional
-  velocityOut += err+(kd * err);
-  String message = String(last_time)+", Current Velocity: "+String(currentVelocity)+", Pulses: "+String(pulse)+", Exchange: "+String(exchange)+", Wheel Circumference: "+String(wheelCircumference)+", dT: "+String(dT);
-  String mes = String(last_time)+", Error: "+String(err)+", Velocity Out: "+String(velocityOut)+", Current Velocity: "+String(currentVelocity)+", Setpoint: "+String(setpoint)+", Pusles: "+String(pulse);
-  pulse = 0;
-  client.publish("abbexpectmore@gmail.com/light", message);
-  client.publish("abbexpectmore@gmail.com/light", mes);
- }
- // Add speed diff for turning
- DriveDirSpeed(motorPinRightDir, motorPinRightSpeed, dir, velocityOut);
- DriveDirSpeed(motorPinLeftDir, motorPinLeftSpeed, dir, velocityOut);
-}
 
-ICACHE_RAM_ATTR void IntCallback() {
-  pulse += 1;
-}
-bool millis_check(int last) {
+void millis_check(int last) {
   if ((millis() - last)>=interval) {
     dT = millis() - last;
     timer = true;
   } else {
     timer = false;
   }
+}
+
+void loop() {
+ client.loop();
+ millis_check(last_time);
+ if (timer == true) {
+    dT = dT/1000;
+    currentVelocity = (pulse*exchange*wheelCircumference)/dT; // unit cm/s
+    last_time = millis();
+    err = setpoint - currentVelocity;
+    if (setpoint < 1){
+      velocityOut = 0;
+    }else{
+      sumError += err*dT;
+      velocityOut = (currentVelocity*5)+(err*kp)+(ki*sumError)+(kd*((err-last_error)/dT));
+    }
+    last_error = err;
+
+
+    String message = "("+String(setpoint)+','+String(currentVelocity)+','+String(velocityOut/10)+')';
+    pulse = 0;
+    client.publish("lisa.engstrom@abbindustrigymnasium.se/ctrl", message);
+  // client.publish("lisa.engstrom@abbindustrigymnasium.se/info", mes);
+ }
+ // Add speed diff for turning
+ DriveDirSpeed(motorPinRightDir, motorPinRightSpeed, dir, int(velocityOut));
+ DriveDirSpeed(motorPinLeftDir, motorPinLeftSpeed, dir, int(velocityOut));
 }
