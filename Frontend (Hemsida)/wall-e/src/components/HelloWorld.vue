@@ -107,34 +107,28 @@ export default {
       if (this.dSpeed == ""){
         this.dSpeed = '0'
       }
-      if (this.kd == ""){
-        this.kd = '0'
-      }
-      if (this.ki == ""){
-        this.ki = '0'
-      }
-      if (this.kp == ""){
-        this.kp = '0'
-      }
-      firebase
+      if (this.kd != ""){
+        firebase
         .database()
         .ref('kd')
         .set(Number(this.kd))
-      firebase
+      }
+      if (this.ki != ""){
+        firebase
         .database()
         .ref('ki')
         .set(Number(this.ki))
-      firebase
+      }
+      if (this.kp != ""){
+        firebase
         .database()
         .ref('kp')
         .set(Number(this.kp))
+      }
       let msg = String('('+this.dSpeed+':'+this.kd+':'+this.ki+','+this.kp+')');
       client.publish("lisa.engstrom@abbindustrigymnasium.se/set", msg);
     },
     data(newDataPoints) {
-      // let x = []
-      // x = this.series
-      // this.series = []
       let x = []
       this.series.forEach(line => {
         x.push({name: line["name"], data: []})
@@ -154,8 +148,6 @@ export default {
         let formatted = value.replace('(','')
         formatted = formatted.replace(')','')
         const vars = formatted.split(',')
-        // console.log(Number(vars[0]))
-        // console.log(Number(vars[1]))
         this.data([Number(vars[0]),Number(vars[1]),Number(vars[2])])
       }
     },
@@ -166,12 +158,18 @@ export default {
     },
   },
   created: function () {
+    firebase.database().ref('kp').on("value", (snapshot)=>{
+      this.kp = snapshot.val()
+    })
+    firebase.database().ref('ki').on("value", (snapshot)=>{
+      this.ki = snapshot.val()
+    })
+    firebase.database().ref('kd').on("value", (snapshot)=>{
+      this.kd = snapshot.val()
+    })
     setInterval(() => {
       this.display = data;
     }, 1);
-  },
-  beforeDestroyed: function () {
-    client.end();
   },
 };
 </script>
