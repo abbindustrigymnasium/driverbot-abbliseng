@@ -145,11 +145,17 @@ void loop() {
     }else{
       sumError += err*dT;
       velocityOut = (currentVelocity*5)+(err*kp)+(ki*sumError)+(kd*((err-last_error)/dT));
+      // if (velocityOut>max_vOut){
+      //   max_vOut = velocityOut;
+      // }
+      // velocityOut = map(velocityOut,0,3000,0,1023);
     }
+    // if (velocityOut > 1020){
+    //   velocityOut = 1023;
+    // }
     last_error = err;
 
-
-    String message = "("+String(setpoint)+','+String(currentVelocity)+','+String(velocityOut/10)+')';
+    String message = "("+String(setpoint)+','+String(currentVelocity)+','+String(velocityOut/10)+','+String(last_time/1000)+')';
     pulse = 0;
     client.publish("lisa.engstrom@abbindustrigymnasium.se/ctrl", message);
   // client.publish("lisa.engstrom@abbindustrigymnasium.se/info", mes);
