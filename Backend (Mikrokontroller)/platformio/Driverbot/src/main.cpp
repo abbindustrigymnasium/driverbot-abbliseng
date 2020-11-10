@@ -51,14 +51,16 @@ bool neg = false;
 
 void onConnectionEstablished();
 EspMQTTClient client(
-/*  "ABB_Indgym_Guest",           // Wifi ssid
-  "Welcome2abb",           // Wifi password*/
-  "#Telia-53E8F8",
-  "JAH@=-wauM231rnt", 
+  "ABB_Indgym_Guest",           // Wifi ssid
+  "Welcome2abb",           // Wifi password
+  // "#Telia-53E8F8",
+  // "JAH@=-wauM231rnt", 
+  // "imtired",
+  // "testo123", 
   "maqiatto.com",  // MQTT broker ip
   "lisa.engstrom@abbindustrigymnasium.se",            // MQTT username
   "driverbot",       // MQTT password
-  "Node",          // Client name
+  "NodeBoi732462",          // Client name
   1883
 );
 
@@ -133,6 +135,10 @@ void millis_check(int last) {
 }
 
 void loop() {
+  if (!client.isWifiConnected()){
+    Serial.println("no wifi");
+  }
+  delay(1000);
  client.loop();
  millis_check(last_time);
  if (timer == true) {
