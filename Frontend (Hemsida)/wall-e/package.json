@@ -8,7 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "apexcharts": "^3.22.0",
+    "apexcharts": "^3.24.0",
     "core-js": "^3.6.5",
     "firebase": "^7.24.0",
     "mqtt": "4.1.0",
